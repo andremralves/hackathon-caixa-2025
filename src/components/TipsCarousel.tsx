@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, FlatList, StyleSheet, Dimensions, Pressable, ViewToken } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
 import { useAppColorScheme } from '#/context/theme';
@@ -52,6 +53,14 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
             <View style={[styles.card, { backgroundColor: t.surface }]}> 
               <Txt style={[styles.tipTitle, { color: t.primary }]}>{item.title}</Txt>
               <Txt style={[styles.tipDesc, { color: t.textMuted }]}>{item.description}</Txt>
+              <Pressable
+                onPress={() => onPressItem?.(item)}
+                style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
+                accessibilityRole="button"
+              >
+                <Txt style={[styles.moreText, { color: t.primary }]}>Saiba mais</Txt>
+                <Ionicons name="arrow-forward" size={16} color={t.primary} style={{ marginLeft: 4 }} />
+              </Pressable>
             </View>
           </Pressable>
         )}
@@ -93,6 +102,12 @@ const styles = StyleSheet.create({
   },
   tipTitle: { fontSize: 16, fontWeight: '700', marginBottom: 6 },
   tipDesc: { fontSize: 13, lineHeight: 18 },
+  moreLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  moreText: { fontSize: 13, fontWeight: '700' },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 10 },
   dot: { height: 8, borderRadius: 4 },
 });
