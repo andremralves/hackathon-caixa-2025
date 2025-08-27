@@ -59,7 +59,10 @@ module.exports = function (_config) {
       ],
       experiments: {},
       extra: {
-        apiUrl: "http://localhost:3000"
+        apiUrl: "http://localhost:3000",
+        eas: {
+          "projectId": "bc6ea297-fc52-4044-8509-28c0ecc11790"
+        }
       }
     }
 
