@@ -1,5 +1,24 @@
 # 📱 Simulador de Empréstimos Caixa
 
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/2503a9de-2b19-424e-9291-f484ccb1aff9" 
+    alt="Hackathon Caixa 2025 - Light theme" 
+    width="20%" 
+    style="border-radius:12px; margin:4px;" 
+  />
+  <img 
+    src="https://github.com/user-attachments/assets/6b635c3c-22b9-451d-b222-bb8577f08518" 
+    alt="Hackathon Caixa 2025 - Dark theme" 
+    width="20%" 
+    style="border-radius:12px; margin:4px;" 
+  />
+</>
+
+
+
+
+
 Aplicativo mobile (Expo + React Native 0.79 + React 19) para:
 1. Cadastrar produtos de empréstimo
 2. Listar / explorar produtos disponíveis
