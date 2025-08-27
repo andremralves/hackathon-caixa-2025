@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { Txt } from '#/components/Txt';
+import GradientButton from '#/components/GradientButton';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useProducts } from '#/context/products';
 import { simulatePrice } from '#/utils/simulate';
@@ -31,13 +32,12 @@ function formatBRLInput(raw: string) {
 
 function getMonthlyRate(p?: LoanProduct | null) {
   if (!p) return null;
-  // Your mock uses monthlyRate * 12 inside annualRate → divide by 12
   return p.annualRate / 12;
 }
 
 function getDefaultTerm(p?: LoanProduct | null) {
   if (!p) return 12;
-  return Math.min(12, Math.max(1, p.maxTermMonths)); // sensible default capped at 12
+  return Math.min(12, Math.max(1, p.maxTermMonths));
 }
 
 export default function SimulationScreen() {
@@ -78,11 +78,9 @@ export default function SimulationScreen() {
     setAmountValue(value);
   }, []);
 
-  // Term (meses) — SELECT (1..maxTermMonths)
   const [monthPickerOpen, setMonthPickerOpen] = useState(false);
   const [term, setTerm] = useState<number>(getDefaultTerm(initialProduct));
 
-  // Keep term within the new product's max when product changes
   const onSelectProduct = (item: LoanProduct) => {
     setSelectedProduct(item);
     setTerm(prev => {
@@ -101,7 +99,6 @@ export default function SimulationScreen() {
 
   const result = useMemo(() => {
     if (!derivedProduct || !amountValue || !term) return null;
-    // simulatePrice(product, amount, months) -> { installment, totalInterest, totalPaid, schedule[] }
     return simulatePrice(derivedProduct, amountValue, term);
   }, [derivedProduct, amountValue, term]);
 
@@ -260,13 +257,14 @@ export default function SimulationScreen() {
           </View>
         )}
 
-        {/* Back button */}
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: buttonBg }]}
+        {/* CTA button */}
+        <GradientButton
+          title="Contratar"
           onPress={() => navigation.goBack()}
-        >
-          <Txt style={[styles.buttonText, { color: text }]}>Voltar</Txt>
-        </TouchableOpacity>
+          fullWidth
+          roundness={22}
+          style={{ marginTop: 24 }}
+        />
       </ScrollView>
 
       {/* Product Picker Modal */}
@@ -296,7 +294,7 @@ export default function SimulationScreen() {
             ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           />
           <TouchableOpacity style={[styles.modalClose, { backgroundColor: buttonBg }]} onPress={() => setPickerOpen(false)}>
-            <Txt style={[styles.buttonText, { color: text }]}>Fechar</Txt>
+            <Txt style={{ fontSize: 16, fontWeight: '700', color: text }}>Fechar</Txt>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -331,7 +329,7 @@ export default function SimulationScreen() {
             style={[styles.modalClose, { backgroundColor: buttonBg }]}
             onPress={() => setMonthPickerOpen(false)}
           >
-            <Txt style={[styles.buttonText, { color: text }]}>Fechar</Txt>
+            <Txt style={{ fontSize: 16, fontWeight: '700', color: text }}>Fechar</Txt>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -365,9 +363,7 @@ const styles = StyleSheet.create({
   th: { flex: 1, fontSize: 12, fontWeight: '800' },
   tr: { flexDirection: 'row', borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, padding: 8 },
   td: { flex: 1, fontSize: 12 },
-
-  button: { marginTop: 24, paddingVertical: 14, borderRadius: 12, alignItems: 'center' },
-  buttonText: { fontSize: 16, fontWeight: '700' },
+  
 
   // Modal / picker
   modalBackdrop: { flex: 1, backgroundColor: '#0008' },
