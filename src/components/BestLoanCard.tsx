@@ -31,7 +31,7 @@ export function BestLoanCard({ product, onSimulate }: Props) {
 
   return (
     <View style={[styles.wrapper, { borderColor: t.borderStrong }]}> 
-      <View style={[styles.inner, { backgroundColor: t.surface }]}> 
+      <View style={[styles.inner, { backgroundColor: t.background }]}> 
         <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Melhor opção</Txt>
         <Txt style={[styles.title, { color: t.text }]}>{product.name}</Txt>
         <View style={{ flexDirection: 'row', marginTop: 12 }}>

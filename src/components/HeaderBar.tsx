@@ -17,7 +17,7 @@ export default function HeaderBar() {
         styles.wrap,
         {
           paddingTop: insets.top, // safe-area
-          backgroundColor: t.surface,
+          backgroundColor: t.background,
           // borderBottomColor: t.border,
         },
       ]}

@@ -50,9 +50,9 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
             onPress={() => onPressItem?.(item)}
             style={[styles.cardWrapper, { width: CARD_W, borderColor: t.borderStrong }]}
           >
-            <View style={[styles.card, { backgroundColor: t.surface }]}> 
-              <Txt style={[styles.tipTitle, { color: t.primary }]}>{item.title}</Txt>
-              <Txt style={[styles.tipDesc, { color: t.textMuted }]}>{item.description}</Txt>
+            <View style={[styles.card, { backgroundColor: t.foreground }]}> 
+              <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
+              <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
               <Pressable
                 onPress={() => onPressItem?.(item)}
                 style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}

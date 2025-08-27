@@ -133,7 +133,7 @@ function Card({
         style={[styles.border, { borderColor: t.borderStrong }]}
         onLayout={(e) => onMeasure?.(e.nativeEvent.layout.height)}
       >
-        <View style={[styles.card, { backgroundColor: t.surface, shadowColor: t.primaryActive }]}>
+  <View style={[styles.card, { backgroundColor: t.background, shadowColor: t.primaryActive }]}>
           <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Empréstimo</Txt>
           <Txt style={[styles.title, { color: t.text }]}>{item.nome}</Txt>
           {item.descricao ? <Txt style={[styles.desc, { color: t.textMuted }]}>{item.descricao}</Txt> : null}
@@ -173,7 +173,7 @@ function AddCard({
     <Pressable onPress={onPress} accessibilityRole="button">
       {/* Use SAME wrapper & width; apply measured height so it matches others */}
       <View style={[styles.border, { borderColor: t.borderStrong }, height ? { height } : null]}>
-        <View style={[styles.card, styles.addCardContent, { flex: 1, backgroundColor: t.surface }]}>
+  <View style={[styles.card, styles.addCardContent, { flex: 1, backgroundColor: t.background }]}>
           <Txt style={[styles.addIcon, { color: t.primary }]}>＋</Txt>
           <Txt style={[styles.addText, { color: t.primary }]}>Adicionar</Txt>
         </View>
