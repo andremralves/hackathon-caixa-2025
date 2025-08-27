@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { View, FlatList, StyleSheet, Dimensions, Pressable, ViewToken } from 'react-native';
+import { View, FlatList, StyleSheet, Pressable, ViewToken } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
 import { useAppColorScheme } from '#/context/theme';
 
-const { width } = Dimensions.get('window');
-const CARD_W = Math.min(width * 0.6, 300);
+// Fixed card width (keeps layout consistent across devices)
+const CARD_W = 230;
 const GAP = 8;
 
 export type TipItem = {
@@ -54,8 +54,10 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
               { width: CARD_W, borderColor: t.borderStrong, backgroundColor: t.foreground },
             ]}
           >
-            <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
-            <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
+            <View>
+              <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
+              <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
+            </View>
             <Pressable
               onPress={() => onPressItem?.(item)}
               style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
@@ -88,16 +90,10 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
 
 const styles = StyleSheet.create({
   cardUnified: {
-    //borderWidth: 1.5,
     borderRadius: 12,
     padding: 16,
-    elevation: 1,
-    //shadowColor: '#000',
-    //shadowOpacity: 0.05,
-    //shadowRadius: 6,
-    //shadowOffset: { width: 0, height: 3 },
     minHeight: 140,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   tipTitle: { fontSize: 16, fontWeight: '600', marginBottom: 6 },
   tipDesc: { fontSize: 13, lineHeight: 18 },
