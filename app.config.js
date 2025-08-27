@@ -57,7 +57,10 @@ module.exports = function (_config) {
           }
         ]
       ],
-      experiments: {},
+      experiments: {
+        baseUrl: "/hackathon-caixa-2025"
+
+      },
       extra: {
         apiUrl: "http://localhost:3000",
         eas: {
