@@ -14,6 +14,9 @@ import { ProductsProvider } from '#/context/products';
 const Stack = createNativeStackNavigator();
 
 function AppInner() {
+  // Always call all hooks in the same order (avoid conditional early return before other hooks)
+  const scheme = useAppColorScheme();
+  const background = useThemeColor({}, 'background');
   const [fontsLoaded] = useFonts({
     'CAIXA-Light': require('../assets/fonts/caixa/CAIXAStd-Light.woff2'),
     'CAIXA-Regular': require('../assets/fonts/caixa/CAIXAStd-Regular.woff2'),
@@ -21,15 +24,11 @@ function AppInner() {
     'CAIXA-Bold': require('../assets/fonts/caixa/CAIXAStd-Bold.woff2'),
     'CAIXA-ExtraBold': require('../assets/fonts/caixa/CAIXAStd-ExtraBold.woff2'),
   });
-
-  // Provide a fallback while fonts load
-  if (!fontsLoaded) {
-    return <View style={{ flex: 1 }} />;
-  }
-
-  const scheme = useAppColorScheme();
   const mode: 'light' | 'dark' = scheme === 'dark' ? 'dark' : 'light';
-  const background = useThemeColor({}, 'background');
+
+  if (!fontsLoaded) {
+    return <View style={{ flex: 1, backgroundColor: background }} />;
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
