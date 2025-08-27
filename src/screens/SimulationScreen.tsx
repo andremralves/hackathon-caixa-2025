@@ -231,8 +231,8 @@ export default function SimulationScreen() {
             </Txt>
 
             <View style={[styles.tableHeader, { backgroundColor: surface, borderColor: border }]}>
-              <Txt style={[styles.th, { color: text }]}>Mês</Txt>
-              <Txt style={[styles.th, { color: text }]}>Parcela</Txt>
+              <Txt style={[styles.th, { color: text, flex: 0.6 }]}>Mês</Txt>
+              {/* <Txt style={[styles.th, { color: text }]}>Parcela</Txt> */}
               <Txt style={[styles.th, { color: text }]}>Juros</Txt>
               <Txt style={[styles.th, { color: text }]}>Amortização</Txt>
               <Txt style={[styles.th, { color: text }]}>Saldo</Txt>
@@ -248,8 +248,8 @@ export default function SimulationScreen() {
                     { backgroundColor: zebra(index), borderColor: border },
                   ]}
                 >
-                  <Txt style={[styles.td, { color: text }]}>{item.month}</Txt>
-                  <Txt style={[styles.td, { color: text }]}>{brl.format(item.installment)}</Txt>
+                  <Txt style={[styles.td, { color: text, flex: 0.6 }]}>{item.month}</Txt>
+                  {/* <Txt style={[styles.td, { color: text }]}>{brl.format(item.installment)}</Txt> */}
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.interest)}</Txt>
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.amortization)}</Txt>
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.balance)}</Txt>
