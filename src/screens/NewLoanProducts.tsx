@@ -3,13 +3,13 @@ import {
   View,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
 } from 'react-native';
 import { Txt } from '#/components/Txt';
+import Button from '#/components/Button';
 import { useProducts } from '#/context/products';
 import { useNavigation } from '@react-navigation/native';
 import SecondaryHeader from '#/components/SecondaryHeader';
@@ -19,7 +19,6 @@ export default function NewLoanProductScreen() {
   const [name, setName] = useState('');
   const [interestRate, setInterestRate] = useState(''); // annual %
   const [maxTerm, setMaxTerm] = useState('');
-  const [maxAmount, setMaxAmount] = useState('');
   const { addProduct } = useProducts();
   const navigation = useNavigation<any>();
 
@@ -30,8 +29,7 @@ export default function NewLoanProductScreen() {
     }
     const annualRate = parseFloat(interestRate.replace(',', '.')) / 100;
     const maxTermMonths = parseInt(maxTerm, 10);
-    const maxAmountNum = maxAmount ? parseFloat(maxAmount.replace(',', '.')) : undefined;
-    if (isNaN(annualRate) || isNaN(maxTermMonths)) {
+  if (isNaN(annualRate) || isNaN(maxTermMonths)) {
       Alert.alert('Erro', 'Valores inválidos');
       return;
     }
@@ -39,7 +37,6 @@ export default function NewLoanProductScreen() {
       name,
       annualRate,
       maxTermMonths,
-      maxAmount: maxAmountNum,
     });
     Alert.alert('Produto Criado', `ID: ${product.id}`);
     navigation.goBack();
@@ -48,10 +45,8 @@ export default function NewLoanProductScreen() {
   const background = useThemeColor({}, 'background');
   const surface = useThemeColor({}, 'surface');
   const text = useThemeColor({}, 'text');
-  const textMuted = useThemeColor({}, 'textMuted');
+  // const textMuted = useThemeColor({}, 'textMuted'); // reserved if we add helper text
   const border = useThemeColor({}, 'border');
-  const buttonBg = useThemeColor({}, 'buttonPrimaryBg');
-  const buttonTextColor = useThemeColor({}, 'buttonPrimaryText');
 
   return (
     <KeyboardAvoidingView
@@ -59,7 +54,11 @@ export default function NewLoanProductScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <SecondaryHeader />
-      <ScrollView contentContainerStyle={[styles.container, { paddingTop: 16 }]}> 
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={[styles.container, { paddingTop: 16 }]}
+        keyboardShouldPersistTaps="handled"
+      > 
   <Txt style={[styles.title, { color: text }]}>Novo Produto de Empréstimo</Txt>
 
   <Txt style={[styles.label, { color: text }]}>Nome do Produto</Txt>
@@ -88,19 +87,17 @@ export default function NewLoanProductScreen() {
           onChangeText={setMaxTerm}
         />
 
-  <Txt style={[styles.label, { color: text }]}>Valor Máximo (opcional)</Txt>
-        <TextInput
-          style={[styles.input, { backgroundColor: surface, borderColor: border, color: text }]}
-          placeholder="ex: 50000"
-          keyboardType="numeric"
-          value={maxAmount}
-          onChangeText={setMaxAmount}
-        />
-
-        <TouchableOpacity style={[styles.button, { backgroundColor: buttonBg }]} onPress={handleSubmit}>
-          <Txt style={[styles.buttonText, { color: buttonTextColor }]}>Criar Produto</Txt>
-        </TouchableOpacity>
+  {/* Valor Máximo field removed */}
       </ScrollView>
+      <View style={styles.footer}> 
+        <Button
+          title="Criar produto"
+          size="sm"
+          roundness={22}
+          onPress={handleSubmit}
+          style={{ alignSelf: 'flex-end' }}
+        />
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -113,6 +110,10 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: '800', marginBottom: 24 },
   label: { fontSize: 14, fontWeight: '600', marginTop: 12, marginBottom: 6 },
   input: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 16 },
-  button: { marginTop: 24, paddingVertical: 14, borderRadius: 10, alignItems: 'center', elevation: 3 },
-  buttonText: { fontSize: 16, fontWeight: '700' },
+  // legacy button styles removed (using Button component)
+  footer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 8,
+  },
 });
