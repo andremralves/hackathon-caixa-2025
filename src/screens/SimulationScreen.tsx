@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Txt } from '#/components/Txt';
 import GradientButton from '#/components/GradientButton';
+import Button from '#/components/Button';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useProducts } from '#/context/products';
 import { simulatePrice } from '#/utils/simulate';
@@ -51,7 +52,7 @@ export default function SimulationScreen() {
   const textMuted = useThemeColor({}, 'textMuted');
   const foreground = useThemeColor({}, 'foreground');
   const border = useThemeColor({}, 'border');
-  const buttonBg = useThemeColor({}, 'buttonPrimaryBg');
+  // removed direct buttonBg usage (using Button component variants)
 
   if (!products?.length) {
     return (
@@ -268,7 +269,7 @@ export default function SimulationScreen() {
       </ScrollView>
 
       {/* Product Picker Modal */}
-      <Modal visible={pickerOpen} animationType="slide" transparent onRequestClose={() => setPickerOpen(false)}>
+      <Modal visible={pickerOpen} animationType="fade" transparent onRequestClose={() => setPickerOpen(false)}>
         <Pressable style={styles.modalBackdrop} onPress={() => setPickerOpen(false)} />
         <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
           <Txt style={[styles.modalTitle, { color: text }]}>Selecionar produto</Txt>
@@ -293,16 +294,20 @@ export default function SimulationScreen() {
             )}
             ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           />
-          <TouchableOpacity style={[styles.modalClose, { backgroundColor: buttonBg }]} onPress={() => setPickerOpen(false)}>
-            <Txt style={{ fontSize: 16, fontWeight: '700', color: text }}>Fechar</Txt>
-          </TouchableOpacity>
+          <Button
+            title="Fechar"
+            onPress={() => setPickerOpen(false)}
+            fullWidth
+            size="sm"
+            style={{ marginTop: 12 }}
+          />
         </View>
       </Modal>
 
       {/* Month Picker Modal */}
       <Modal
         visible={monthPickerOpen}
-        animationType="slide"
+        animationType="fade"
         transparent
         onRequestClose={() => setMonthPickerOpen(false)}
       >
@@ -325,12 +330,13 @@ export default function SimulationScreen() {
             )}
             ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           />
-          <TouchableOpacity
-            style={[styles.modalClose, { backgroundColor: buttonBg }]}
+          <Button
+            title="Fechar"
             onPress={() => setMonthPickerOpen(false)}
-          >
-            <Txt style={{ fontSize: 16, fontWeight: '700', color: text }}>Fechar</Txt>
-          </TouchableOpacity>
+            fullWidth
+            size="sm"
+            style={{ marginTop: 12 }}
+          />
         </View>
       </Modal>
     </View>
@@ -374,5 +380,4 @@ const styles = StyleSheet.create({
   },
   modalTitle: { fontSize: 18, fontWeight: '800', marginBottom: 12 },
   productRow: { padding: 12, borderWidth: 1, borderRadius: 12 },
-  modalClose: { marginTop: 12, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
 });

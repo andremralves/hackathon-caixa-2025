@@ -17,7 +17,7 @@ import { useThemeColor } from '#/hooks/useThemeColor';
 
 export default function NewLoanProductScreen() {
   const [name, setName] = useState('');
-  const [interestRate, setInterestRate] = useState(''); // annual %
+  const [interestRate, setInterestRate] = useState('');
   const [maxTerm, setMaxTerm] = useState('');
   const { addProduct } = useProducts();
   const navigation = useNavigation<any>();
@@ -45,7 +45,6 @@ export default function NewLoanProductScreen() {
   const background = useThemeColor({}, 'background');
   const surface = useThemeColor({}, 'surface');
   const text = useThemeColor({}, 'text');
-  // const textMuted = useThemeColor({}, 'textMuted'); // reserved if we add helper text
   const border = useThemeColor({}, 'border');
 
   return (
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: '800', marginBottom: 24 },
   label: { fontSize: 14, fontWeight: '600', marginTop: 12, marginBottom: 6 },
   input: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 16 },
-  // legacy button styles removed (using Button component)
   footer: {
     paddingHorizontal: 20,
     paddingBottom: 20,

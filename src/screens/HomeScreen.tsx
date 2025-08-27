@@ -13,14 +13,12 @@ import { useThemeColor } from '#/hooks/useThemeColor';
 import { useProducts } from '#/context/products';
 
 export default function HomeScreen() {
-  // const insets = useSafeAreaInsets(); // no longer needed after removing bottom button
   const navigation = useNavigation<any>();
   const { products } = useProducts();
   // Theme tokens
   const background = useThemeColor({}, 'background');
   const text = useThemeColor({}, 'text');
   const textMuted = useThemeColor({}, 'textMuted');
-  // Removed footer button related tokens
   const primary = useThemeColor({}, 'primary');
 
   // Static tips (could be fetched later)

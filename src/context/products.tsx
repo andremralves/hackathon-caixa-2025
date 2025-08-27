@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { LoanProduct } from '#/types/loan';
 
-// Initial mock (mapped from old HomeScreen mock)
 const initialProducts: LoanProduct[] = [
   {
     id: 'cx-1',
     name: 'Crédito Pessoal Caixa',
-    annualRate: 0.029 * 12, // approximate
+    annualRate: 0.029 * 12,
     maxTermMonths: 24,
     maxAmount: 20000,
   },
