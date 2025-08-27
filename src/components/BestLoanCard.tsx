@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Txt } from '#/components/Txt';
 import { useAppColorScheme } from '#/context/theme';
 import { Themes } from '#/constants/Colors';
+import GradientButton from '#/components/GradientButton';
 
 export type BestLoanProduct = {
   id: string;
@@ -30,7 +31,7 @@ export function BestLoanCard({ product, onSimulate }: Props) {
   }, [onSimulate, product]);
 
   return (
-    <View style={[styles.container, { borderColor: t.borderStrong, backgroundColor: t.background }]}> 
+    <View style={[styles.container, { borderColor: t.borderStrong, backgroundColor: t.background }]}>
       <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Melhor opção</Txt>
       <Txt style={[styles.title, { color: t.text }]}>{product.name}</Txt>
       <View style={{ flexDirection: 'row', marginTop: 12 }}>
@@ -41,9 +42,7 @@ export function BestLoanCard({ product, onSimulate }: Props) {
       <View style={{ flexDirection: 'row', marginTop: 10 }}>
         <Info label="Até" value={formatBRL(product.maxAmount || 0)} theme={t} small="Limite máx." />
       </View>
-      <Pressable accessibilityRole="button" onPress={handlePress} style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]}> 
-        <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
-      </Pressable>
+      <GradientButton title="Simular agora" onPress={handlePress} gradient="lime" fullWidth height={46} />
     </View>
   );
 }
@@ -88,11 +87,5 @@ const styles = StyleSheet.create({
   infoLabel: { fontSize: 12 },
   infoValue: { fontSize: 16, fontWeight: '600', marginTop: 4 },
   infoSmall: { fontSize: 11, marginTop: 2 },
-  cta: {
-    marginTop: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  ctaText: { fontWeight: '600' },
+  // cta styles removed (using GradientButton)
 });

@@ -49,7 +49,7 @@ export default function SimulationScreen() {
   const background = useThemeColor({}, 'background');
   const text = useThemeColor({}, 'text');
   const textMuted = useThemeColor({}, 'textMuted');
-  const surface = useThemeColor({}, 'surface');
+  const foreground = useThemeColor({}, 'foreground');
   const border = useThemeColor({}, 'border');
   const buttonBg = useThemeColor({}, 'buttonPrimaryBg');
 
@@ -119,7 +119,7 @@ export default function SimulationScreen() {
     });
   }, [result]);
 
-  const zebra = (i: number) => (i % 2 === 0 ? surface : 'transparent');
+  const zebra = (i: number) => (i % 2 === 0 ? foreground : 'transparent');
 
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
@@ -130,7 +130,7 @@ export default function SimulationScreen() {
           <Txt style={[styles.title, { color: text }]}>Simulação de Empréstimo</Txt>
           <TouchableOpacity
             onPress={() => setPickerOpen(true)}
-            style={[styles.chip, { borderColor: border, backgroundColor: surface }]}
+            style={[styles.chip, { borderColor: border, backgroundColor: foreground }]}
           >
             <Txt style={{ color: text, fontWeight: '700' }}>
               {selectedProduct ? selectedProduct.name : 'Selecionar produto'}
@@ -140,7 +140,7 @@ export default function SimulationScreen() {
 
         {/* Dados do produto */}
         {selectedProduct && (
-          <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+          <View style={[styles.card, { backgroundColor: foreground, borderColor: border }]}>
             <Txt style={[styles.cardTitle, { color: text }]}>Dados do produto</Txt>
             <View style={styles.cardRow}>
               <Txt style={[styles.cardLabel, { color: textMuted }]}>Nome</Txt>
@@ -163,7 +163,7 @@ export default function SimulationScreen() {
         <View style={{ marginTop: 12 }}>
           <Txt style={[styles.label, { color: text }]}>Valor (R$)</Txt>
           <TextInput
-            style={[styles.input, { backgroundColor: surface, borderColor: border, color: text }]}
+            style={[styles.input, { backgroundColor: foreground, borderColor: border, color: text }]}
             keyboardType={Platform.select({ ios: 'number-pad', android: 'numeric' })}
             value={amountMasked}
             onChangeText={onAmountChange}
@@ -173,7 +173,7 @@ export default function SimulationScreen() {
 
           <Txt style={[styles.label, { color: text }]}>Prazo (meses)</Txt>
           <TouchableOpacity
-            style={[styles.input, { backgroundColor: surface, borderColor: border, justifyContent: 'center' }]}
+            style={[styles.input, { backgroundColor: foreground, borderColor: border, justifyContent: 'center' }]}
             onPress={() => setMonthPickerOpen(true)}
           >
             <Txt style={{ color: text, fontSize: 16 }}>
@@ -184,7 +184,7 @@ export default function SimulationScreen() {
 
         {/* Resumo */}
         {result && (
-          <View style={[styles.card, { marginTop: 16, backgroundColor: surface, borderColor: border }]}>
+          <View style={[styles.card, { marginTop: 16, backgroundColor: foreground, borderColor: border }]}>
             <Txt style={[styles.cardTitle, { color: text }]}>Resumo</Txt>
 
             <View style={styles.summaryRow}>
@@ -230,7 +230,7 @@ export default function SimulationScreen() {
               Memória de cálculo (Tabela Price)
             </Txt>
 
-            <View style={[styles.tableHeader, { backgroundColor: surface, borderColor: border }]}>
+            <View style={[styles.tableHeader, { backgroundColor: foreground, borderColor: border }]}>
               <Txt style={[styles.th, { color: text, flex: 0.6 }]}>Mês</Txt>
               {/* <Txt style={[styles.th, { color: text }]}>Parcela</Txt> */}
               <Txt style={[styles.th, { color: text }]}>Juros</Txt>
@@ -272,7 +272,7 @@ export default function SimulationScreen() {
       {/* Product Picker Modal */}
       <Modal visible={pickerOpen} animationType="slide" transparent onRequestClose={() => setPickerOpen(false)}>
         <Pressable style={styles.modalBackdrop} onPress={() => setPickerOpen(false)} />
-        <View style={[styles.modalSheet, { backgroundColor: surface, borderColor: border }]}>
+        <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
           <Txt style={[styles.modalTitle, { color: text }]}>Selecionar produto</Txt>
           <FlatList
             data={products as LoanProduct[]}
@@ -309,7 +309,7 @@ export default function SimulationScreen() {
         onRequestClose={() => setMonthPickerOpen(false)}
       >
         <Pressable style={styles.modalBackdrop} onPress={() => setMonthPickerOpen(false)} />
-        <View style={[styles.modalSheet, { backgroundColor: surface, borderColor: border }]}>
+        <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
           <Txt style={[styles.modalTitle, { color: text }]}>Selecionar prazo</Txt>
           <FlatList
             data={Array.from({ length: selectedProduct?.maxTermMonths ?? 60 }, (_, i) => i + 1)}

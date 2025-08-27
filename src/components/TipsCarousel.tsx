@@ -61,7 +61,6 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
             <Pressable
               onPress={() => onPressItem?.(item)}
               style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
-              accessibilityRole="button"
             >
               <Txt style={[styles.moreText, { color: t.primary }]}>Saiba mais</Txt>
               <Ionicons name="arrow-forward" size={16} color={t.primary} style={{ marginLeft: 4 }} />
