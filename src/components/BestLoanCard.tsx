@@ -39,10 +39,14 @@ export function BestLoanCard({ product, onSimulate }: Props) {
         <Divider />
         <Info label="Prazo" value={`${product.maxTermMonths || 0} meses`} theme={t} />
       </View>
-      <View style={{ flexDirection: 'row', marginTop: 10 }}>
-        <Info label="Até" value={formatBRL(product.maxAmount || 0)} theme={t} small="Limite máx." />
-      </View>
-      <GradientButton title="Simular agora" onPress={handlePress} gradient="lime" fullWidth height={46} />
+      <GradientButton
+        title="Simular agora"
+        onPress={handlePress}
+        roundness={22}
+        gradient="lime"
+        height={40}
+        style={{ marginTop: 16, alignSelf: 'flex-end', minWidth: 140 }}
+      />
     </View>
   );
 }

@@ -35,7 +35,7 @@ export default function SecondaryHeader() {
         onPress={toggle}
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
-        <Ionicons name={scheme === 'dark' ? 'sunny' : 'moon'} size={22} color={iconColor} />
+        <Ionicons name={scheme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={22} color={iconColor} />
       </TouchableOpacity>
     </View>
   );

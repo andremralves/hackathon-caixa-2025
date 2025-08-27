@@ -127,14 +127,14 @@ export const Themes = {
   separator: caixaFixedPalette.grayscale_30,
 
   // Status / feedback
-  success: caixaFixedPalette.tertiary_70,
-  successBg: caixaFixedPalette.tertiary_10,
-  warning: caixaFlexiblePalette.tangerine_70,
-  warningBg: caixaFlexiblePalette.tangerine_10,
-  danger: caixaFlexiblePalette.guava_70,
-  dangerBg: caixaFlexiblePalette.guava_10,
-  info: caixaFlexiblePalette.sky_70,
-  infoBg: caixaFlexiblePalette.sky_10,
+  //success: caixaFixedPalette.tertiary_70,
+  //successBg: caixaFixedPalette.tertiary_10,
+  //warning: caixaFlexiblePalette.tangerine_70,
+  //warningBg: caixaFlexiblePalette.tangerine_10,
+  //danger: caixaFlexiblePalette.guava_70,
+  //dangerBg: caixaFlexiblePalette.guava_10,
+  //info: caixaFlexiblePalette.sky_70,
+  //infoBg: caixaFlexiblePalette.sky_10,
 
   // Special
   focusRing: caixaFixedPalette.primary_50,
@@ -172,19 +172,19 @@ export const Themes = {
   textOnPrimary: caixaFixedPalette.grayscale_white,
 
   // Borders & separators
-  border: caixaFixedPalette.grayscale_90,
+  border: caixaFixedPalette.grayscale_130,
   borderStrong: caixaFixedPalette.grayscale_130,
   separator: caixaFixedPalette.grayscale_90,
 
   // Status / feedback (shift toward mid tones for dark bg legibility)
-  success: caixaFixedPalette.tertiary_50,
-  successBg: caixaFixedPalette.tertiary_110,
-  warning: caixaFlexiblePalette.tangerine_50,
-  warningBg: caixaFlexiblePalette.tangerine_110,
-  danger: caixaFlexiblePalette.guava_50,
-  dangerBg: caixaFlexiblePalette.guava_110,
-  info: caixaFlexiblePalette.sky_50,
-  infoBg: caixaFlexiblePalette.sky_110,
+  //success: caixaFixedPalette.tertiary_50,
+  //successBg: caixaFixedPalette.tertiary_110,
+  //warning: caixaFlexiblePalette.tangerine_50,
+  //warningBg: caixaFlexiblePalette.tangerine_110,
+  //danger: caixaFlexiblePalette.guava_50,
+  //dangerBg: caixaFlexiblePalette.guava_110,
+  //info: caixaFlexiblePalette.sky_50,
+  //infoBg: caixaFlexiblePalette.sky_110,
 
   // Special
   focusRing: caixaFixedPalette.primary_50,

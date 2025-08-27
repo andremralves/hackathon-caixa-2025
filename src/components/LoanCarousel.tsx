@@ -1,19 +1,12 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
-import {
-  View,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Dimensions,
-  ViewToken,
-} from 'react-native';
+import { View, FlatList, Pressable, StyleSheet, Dimensions, ViewToken } from 'react-native';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
 import { fontWeight as fw } from '#/constants/tokens';
 import { useAppColorScheme } from '#/context/theme';
 
 const { width } = Dimensions.get('window');
-const CARD_W = Math.min(width * 0.86, 380);
+const CARD_W = Math.min(width * 0.7, 380);
 const GAP = 8;
 const SHOW_ALL_ID = '__show_all__';
 
@@ -113,7 +106,7 @@ export default function LoanCarousel({ data, onPress, onAdd }: Props) {
 
 function Card({
   item,
-  onPress,
+  onPress, // only used for the button now
   onMeasure,
   themeColors: t,
 }: {
@@ -125,11 +118,9 @@ function Card({
   // Gradient removed – we now render a simple bordered container
 
   const taxaPct = (item.taxaMes * 100).toFixed(1).replace('.', ',');
-  const parcelaAprox = calcParcela(item.valorMax, item.taxaMes, item.prazoMeses);
 
   return (
-    <Pressable
-      onPress={onPress}
+    <View
       onLayout={(e) => onMeasure?.(e.nativeEvent.layout.height)}
       style={[styles.cardContainer, { borderColor: t.borderStrong, backgroundColor: t.background }]}
     >
@@ -143,20 +134,14 @@ function Card({
         <Info label="Prazo" value={`${item.prazoMeses} meses`} themeColors={t} />
       </View>
 
-      <View style={{ flexDirection: 'row', marginTop: 10 }}>
-        <Info label="Até" value={formatBRL(item.valorMax)} small="Limite máx." themeColors={t} />
-        <Divider />
-        <Info label="Parcela aprox." value={formatBRL(parcelaAprox)} small="*Tabela Price" themeColors={t} />
-      </View>
-
       <Pressable
-        style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]}
         onPress={onPress}
         accessibilityRole="button"
+        style={[styles.cta, { backgroundColor: t.foreground }]}
       >
-        <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
+        <Txt style={[styles.ctaText, { color: t.text }]}>Simular agora</Txt>
       </Pressable>
-    </Pressable>
+    </View>
   );
 }
 
@@ -181,8 +166,8 @@ function AddCard({
         height ? { height } : null,
       ]}
     >
-      <Txt style={[styles.addIcon, { color: t.primary }]}>＋</Txt>
-      <Txt style={[styles.addText, { color: t.primary }]}>Adicionar</Txt>
+      <Txt style={[styles.addIcon, { color: t.text }]}>＋</Txt>
+      <Txt style={[styles.addText, { color: t.text }]}>Adicionar</Txt>
     </Pressable>
   );
 }
@@ -208,12 +193,6 @@ function formatBRL(n: number) {
   return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function calcParcela(valor: number, taxaMes: number, n: number) {
-  if (taxaMes <= 0) return Math.round((valor / n) * 100) / 100;
-  const i = taxaMes;
-  const fator = (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
-  return Math.round((valor * fator) / 10) * 10;
-}
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -229,26 +208,26 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     fontSize: 12,
-    fontWeight: fw.bold,
+    fontWeight: fw.semiBold,
   },
   title: { fontSize: 18, fontWeight: fw.bold, marginTop: 6 },
   desc: { marginTop: 2 },
   label: { fontSize: 12 },
-  value: { fontSize: 16, fontWeight: fw.bold, marginTop: 4 },
+  value: { fontSize: 16, fontWeight: fw.semiBold, marginTop: 4 },
   small: { fontSize: 11, marginTop: 2 },
   cta: {
-    marginTop: 14,
-    // backgroundColor via theme
-    paddingVertical: 12,
-    borderRadius: 12,
-    alignItems: 'center',
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 22,
+    alignSelf: 'flex-end',
   },
-  ctaText: { fontWeight: fw.bold },
+  ctaText: { fontWeight: fw.semiBold, fontSize: 16 },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 12 },
   dot: { height: 8, borderRadius: 4 },
 
   // Styles for the add card
   addCardContent: { justifyContent: 'center', alignItems: 'center' },
   addIcon: { fontSize: 36, marginBottom: 8 },
-  addText: { fontSize: 16, fontWeight: fw.bold },
+  addText: { fontSize: 16, fontWeight: fw.semiBold },
 });
