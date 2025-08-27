@@ -1,77 +1,87 @@
-# Simulador de Empréstimo (Mobile)
+# 📱 Simulador de Empréstimos Caixa
 
-Aplicativo Expo Router para cadastrar produtos, listar e simular empréstimos (memória de cálculo).
+Aplicativo mobile (Expo + React Native 0.79 + React 19) para:
+1. Cadastrar produtos de empréstimo
+2. Listar / explorar produtos disponíveis
+3. Simular parcelas (Tabela Price) exibindo memória de cálculo mês a mês (juros, amortização, saldo)
 
-## Endpoints esperados
-- GET /products -> Lista de produtos
-- POST /products -> Cadastra produto
-- POST /simulate -> Realiza simulação e retorna memória de cálculo
+> Este repositório é focado no front‑end. A lista inicial de produtos é mockada em memória.
 
-Configure a URL base no arquivo `app.config.js` em `expo.extra.apiUrl` ou via variável `EXPO_PUBLIC_API_URL`.
+---
+## ✨ Principais Funcionalidades
 
-## Rodando
-1. Instale dependências
-2. Inicie o app
+- Cadastro de produto (nome, taxa anual, prazo máximo)
+- Listagem de produtos com destaque para melhores opções (com menor taxa de juros)
+- Simulação Price: cálculo de parcela fixa, juros totais e tabela detalhada
+- Memória de cálculo normalizada (garantia de campos amortização / juros)
+- Theming automático (light/dark) com tokens (cores, tipografia, gradientes)
+- Navegação estruturada com React Navigation
+- Tipagem TypeScript de produtos, simulação e tabela de amortização
+
+---
+## 🗂️ Estrutura de Pastas (resumo)
+
+```
+src/
+  App.tsx                # Entrada principal / rotas
+  components/            # Componentes UI reutilizáveis
+  context/products.tsx   # Estado de produtos em memória
+  screens/               # Telas (Home, Simulação, Novo Produto ...)
+  utils/simulate.ts      # Lógica de simulação Price
+  types/loan.ts          # Tipos de domínio
+  constants/Colors.ts    # Tokens de cor e tema
+  constants/tokens.ts    # Gradientes e pesos de fonte
+```
+
+---
+## 🚀 Como Rodar
+
+Pré‑requisitos: Node 18+ e npm (ou yarn). Instale o Expo Go no smartphone ou use emulador.
 
 ```powershell
+# Instalar dependências
 npm install
+
+# Iniciar o bundler (porta configurada em package.json)
 npm run start
+
+# Abrir direto em cada plataforma (opcional)
+npm run android
+npm run ios
+npm run web
 ```
 
-Abra no Android, iOS ou Web conforme desejar.
+Se preferir Yarn:
 
-## Estrutura
-- `app/(tabs)/produtos` lista e cadastra produtos
-- `app/(tabs)/simulacao` executa a simulação e exibe o resultado (inclui memória mês a mês)
-
-## Observação
-Os tipos de rota tipados do Expo podem exigir reinício do servidor para refletir novas telas. Se necessário, reinicie o bundler.# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```powershell
+yarn
+yarn start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Abra o QR Code no Expo Go (mobile) ou pressione as teclas indicadas para web / emulador.
 
-## Learn more
+---
+## 🧪 Scripts Disponíveis
 
-To learn more about developing your project with Expo, look at the following resources:
+| Script | Descrição |
+|--------|----------|
+| `start` | Inicia o Expo bundler |
+| `android` / `ios` / `web` | Abrem diretamente na plataforma alvo |
+| `lint` | Executa ESLint com a config Expo |
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
+## 📹 Demonstração (Screen Recording)
 
-## Join the community
+```markdown
+![Demonstração](docs/demo.gif)
+```
 
-Join our community of developers creating universal apps.
+Coloque o arquivo em `docs/demo.gif` ou use link externo.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+## 🔍 Referências
+
+- [Expo Docs](https://docs.expo.dev)
+- [React Navigation](https://reactnavigation.org/)
+- [Tabela Price explicação (pt-BR)](https://pt.wikipedia.org/wiki/Sistema_Franc%C3%AAs_de_Amortiza%C3%A7%C3%A3o)
+
