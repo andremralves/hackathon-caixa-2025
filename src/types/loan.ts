@@ -2,9 +2,7 @@ export type LoanProduct = {
   id: string;
   name: string;
   annualRate: number; // e.g., 0.18 for 18% a.a.
-  minTermMonths?: number;
-  maxTermMonths?: number;
-  minAmount?: number;
+  maxTermMonths: number;
   maxAmount?: number;
 };
 
