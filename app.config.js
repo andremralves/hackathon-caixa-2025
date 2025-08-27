@@ -6,7 +6,7 @@ module.exports = function (_config) {
       slug: "simulador-de-emprestimo",
       version: "1.0.0",
       orientation: "portrait",
-      icon: "./assets/images/icon.png",
+      icon: "./assets/caixa_x_positivo.png",
       scheme: "simuladordeemprestimo",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
