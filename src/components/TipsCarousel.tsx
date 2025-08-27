@@ -100,14 +100,14 @@ const styles = StyleSheet.create({
     minHeight: 140,
     justifyContent: 'center',
   },
-  tipTitle: { fontSize: 16, fontWeight: '700', marginBottom: 6 },
+  tipTitle: { fontSize: 16, fontWeight: '600', marginBottom: 6 },
   tipDesc: { fontSize: 13, lineHeight: 18 },
   moreLink: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
   },
-  moreText: { fontSize: 13, fontWeight: '700' },
+  moreText: { fontSize: 13, fontWeight: '600' },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 10 },
   dot: { height: 8, borderRadius: 4 },
 });

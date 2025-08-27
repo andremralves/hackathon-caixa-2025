@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '600',
   },
-  title: { fontSize: 18, fontWeight: '700', marginTop: 8 },
+  title: { fontSize: 18, fontWeight: '600', marginTop: 8 },
   infoLabel: { fontSize: 12 },
-  infoValue: { fontSize: 16, fontWeight: '700', marginTop: 4 },
+  infoValue: { fontSize: 16, fontWeight: '600', marginTop: 4 },
   infoSmall: { fontSize: 11, marginTop: 2 },
   cta: {
     marginTop: 16,
@@ -105,5 +105,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  ctaText: { fontWeight: '700' },
+  ctaText: { fontWeight: '600' },
 });

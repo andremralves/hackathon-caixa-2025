@@ -158,7 +158,7 @@ export const Themes = {
 
   // Background & surfaces
   background: caixaFixedPalette.black, // pure black
-  foreground: caixaFixedPalette.grayscale_110,
+  foreground: caixaFixedPalette.grayscale_130,
   surface: caixaFixedPalette.black,
   surfaceAlt: caixaFixedPalette.grayscale_90,
   elevated: caixaFixedPalette.grayscale_70,

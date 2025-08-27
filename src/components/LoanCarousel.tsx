@@ -230,12 +230,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '600',
   },
-  title: { fontSize: 18, fontWeight: '700', marginTop: 6 },
+  title: { fontSize: 18, fontWeight: '600', marginTop: 6 },
   desc: { marginTop: 2 },
   label: { fontSize: 12 },
-  value: { fontSize: 16, fontWeight: '700', marginTop: 4 },
+  value: { fontSize: 16, fontWeight: '600', marginTop: 4 },
   small: { fontSize: 11, marginTop: 2 },
   cta: {
     marginTop: 14,
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  ctaText: { fontWeight: '700' },
+  ctaText: { fontWeight: '600' },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 12 },
   dot: { height: 8, borderRadius: 4 },
 
@@ -254,5 +254,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addIcon: { fontSize: 36, marginBottom: 8 },
-  addText: { fontSize: 16, fontWeight: '700' },
+  addText: { fontSize: 16, fontWeight: '600' },
 });

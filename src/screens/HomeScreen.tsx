@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   scrollContent: { paddingBottom: 40 },
   section: { paddingHorizontal: 16, marginTop: 24 },
   header: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 },
-  title: { fontSize: 24, fontWeight: '700' },
+  title: { fontSize: 24, fontWeight: '900' },
   subtitle: { marginTop: 6 },
-  sectionTitle: { fontSize: 16, fontWeight: '700', marginBottom: 12 },
+  sectionTitle: { fontSize: 18, fontWeight: '600', marginBottom: 12 },
 });

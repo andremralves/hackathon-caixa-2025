@@ -15,18 +15,11 @@ const Stack = createNativeStackNavigator();
 
 function AppInner() {
   const [fontsLoaded] = useFonts({
-    'CAIXA-Bold': require('../assets/fonts/caixa/CAIXAStd-Bold.woff2'),
-    'CAIXA-BoldItalic': require('../assets/fonts/caixa/CAIXAStd-BoldItalic.woff2'),
-    'CAIXA-Book': require('../assets/fonts/caixa/CAIXAStd-Book.woff2'),
-    'CAIXA-BookItalic': require('../assets/fonts/caixa/CAIXAStd-BookItalic.woff2'),
-    'CAIXA-ExtraBold': require('../assets/fonts/caixa/CAIXAStd-ExtraBold.woff2'),
-    'CAIXA-ExtraBoldItalic': require('../assets/fonts/caixa/CAIXAStd-ExtraBoldItalic.woff2'),
-    'CAIXA-Italic': require('../assets/fonts/caixa/CAIXAStd-Italic.woff2'),
     'CAIXA-Light': require('../assets/fonts/caixa/CAIXAStd-Light.woff2'),
-    'CAIXA-LightItalic': require('../assets/fonts/caixa/CAIXAStd-LightItalic.woff2'),
     'CAIXA-Regular': require('../assets/fonts/caixa/CAIXAStd-Regular.woff2'),
     'CAIXA-SemiBold': require('../assets/fonts/caixa/CAIXAStd-SemiBold.woff2'),
-    'CAIXA-SemiBoldItalic': require('../assets/fonts/caixa/CAIXAStd-SemiBoldItalic.woff2'),
+    'CAIXA-Bold': require('../assets/fonts/caixa/CAIXAStd-Bold.woff2'),
+    'CAIXA-ExtraBold': require('../assets/fonts/caixa/CAIXAStd-ExtraBold.woff2'),
   });
 
   // Provide a fallback while fonts load
