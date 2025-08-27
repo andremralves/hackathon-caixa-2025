@@ -41,7 +41,7 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
         snapToInterval={CARD_W + GAP}
         decelerationRate="fast"
         snapToAlignment="start"
-        contentContainerStyle={{ paddingHorizontal: GAP }}
+        contentContainerStyle={{ paddingLeft: 0, paddingRight: GAP }}
         ItemSeparatorComponent={() => <View style={{ width: GAP }} />}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current as any}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Txt } from '#/components/Txt';
 import LoanCarousel from '../components/LoanCarousel';
 import { Ionicons } from '@expo/vector-icons';
@@ -55,24 +55,18 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
       <HeaderBar />
-      <ScrollView
-        style={[styles.container, { backgroundColor: background }]}
-        contentContainerStyle={{ paddingBottom: 24 }}
-      >
-        {/* Título + descrição */}
-        <View style={styles.header}>
-          <Txt style={[styles.title, { color: text }]}>
-            Empréstimos <Txt style={[styles.title, { color: primary }]}>Caixa</Txt>
-          </Txt>
-          <Txt style={[styles.subtitle, { color: textMuted }]}> 
-            Escolha a melhor opção para você e simule as parcelas em poucos toques.
-          </Txt>
+      <ScrollView style={[styles.container, { backgroundColor: background }]}
+        contentContainerStyle={styles.scrollContent}>
+        {/* Hero Section */}
+        <View style={styles.section}>
+          <Txt style={[styles.title, { color: text }]}>Empréstimos <Txt style={[styles.title, { color: primary }]}>Caixa</Txt></Txt>
+          <Txt style={[styles.subtitle, { color: textMuted }]}>Escolha a melhor opção para você e simule as parcelas em poucos toques.</Txt>
         </View>
 
         {/* Best Loan Product */}
-        {bestProduct ? (
-          <View style={{ marginTop: 4 }}>
-            <Txt style={[styles.sectionTitle, { color: text, marginHorizontal: 16, marginBottom: 4 }]}>Melhor opção de empréstimo para você</Txt>
+        {bestProduct && (
+          <View style={styles.section}>
+            <Txt style={[styles.sectionTitle, { color: text }]}>Melhor opção de empréstimo para você</Txt>
             <BestLoanCard
               product={{
                 id: bestProduct.id,
@@ -84,23 +78,17 @@ export default function HomeScreen() {
               onSimulate={(p) => navigation.navigate('Simulation', { productId: p.id })}
             />
           </View>
-        ) : null}
+        )}
 
         {/* Tips Section */}
-        <View style={{ paddingTop: 4 }}>
-          <Txt style={[styles.sectionTitle, { color: text, marginHorizontal: 16 }]}>Aumente suas chances de ter mais ofertas</Txt>
-          <View style={{ marginTop: 4 }}>
-            <TipsCarousel data={tips} />
-          </View>
+        <View style={styles.section}>
+          <Txt style={[styles.sectionTitle, { color: text }]}>Aumente suas chances de ter mais ofertas</Txt>
+          <TipsCarousel data={tips} />
         </View>
 
         {/* Loans Section Title */}
-        <View style={{ paddingHorizontal: 16, marginTop: 8 }}>
+        <View style={styles.section}>
           <Txt style={[styles.sectionTitle, { color: text }]}>Nossos emprestimos</Txt>
-        </View>
-        {/* Carrossel */}
-    <View style={{ paddingVertical: 16 }}>
-          {/* In this simplified example we map the loan product type differences */}
           <LoanCarousel
             data={products.map(p => ({
               id: p.id,
@@ -111,18 +99,20 @@ export default function HomeScreen() {
               valorMax: p.maxAmount || 0,
             }))}
             onPress={(item) => navigation.navigate('Simulation', { productId: item.id })}
-      onAdd={() => navigation.navigate('NewLoanProduct')}
+            onAdd={() => navigation.navigate('NewLoanProduct')}
           />
         </View>
-  </ScrollView>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  scrollContent: { paddingBottom: 40 },
+  section: { paddingHorizontal: 16, marginTop: 24 },
   header: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 },
   title: { fontSize: 24, fontWeight: '700' },
   subtitle: { marginTop: 6 },
-  sectionTitle: { fontSize: 16, fontWeight: '700', marginVertical: 12 },
+  sectionTitle: { fontSize: 16, fontWeight: '700', marginBottom: 12 },
 });

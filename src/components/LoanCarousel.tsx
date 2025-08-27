@@ -68,7 +68,8 @@ export default function LoanCarousel({ data, onPress, onAdd }: Props) {
         snapToInterval={CARD_W + GAP}
         decelerationRate="fast"
         snapToAlignment="start"
-        contentContainerStyle={{ paddingHorizontal: GAP, alignItems: 'stretch' }} // stretch row height
+        // Remove left padding so first card aligns with parent content padding; keep right padding for end spacing
+        contentContainerStyle={{ paddingLeft: 0, paddingRight: GAP, alignItems: 'stretch' }}
         ItemSeparatorComponent={() => <View style={{ width: GAP }} />}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current as any}

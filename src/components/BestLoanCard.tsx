@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
   wrapper: {
     borderWidth: 1.5,
     borderRadius: 18,
-    marginHorizontal: 16,
+  // removed horizontal margin so it aligns with section padding
+    marginTop: 8,
   },
   inner: {
     borderRadius: 16,
