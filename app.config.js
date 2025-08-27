@@ -1,30 +1,30 @@
 
 module.exports = function (_config) {
   return {
-    "expo": {
-      "name": "simulador-de-emprestimo",
-      "slug": "simulador-de-emprestimo",
-      "version": "1.0.0",
-      "orientation": "portrait",
-      "icon": "./assets/images/icon.png",
-      "scheme": "simuladordeemprestimo",
-      "userInterfaceStyle": "automatic",
-      "newArchEnabled": true,
-      "ios": {
-        "supportsTablet": true
+    expo: {
+      name: "simulador-de-emprestimo",
+      slug: "simulador-de-emprestimo",
+      version: "1.0.0",
+      orientation: "portrait",
+      icon: "./assets/images/icon.png",
+      scheme: "simuladordeemprestimo",
+      userInterfaceStyle: "automatic",
+      newArchEnabled: true,
+      ios: {
+        supportsTablet: true
       },
-      "android": {
-        "adaptiveIcon": {
-          "foregroundImage": "./assets/images/adaptive-icon.png",
-          "backgroundColor": "#ffffff"
+      android: {
+        adaptiveIcon: {
+          foregroundImage: "./assets/images/adaptive-icon.png",
+          backgroundColor: "#ffffff"
         },
-        "edgeToEdgeEnabled": true
+        edgeToEdgeEnabled: true
       },
-      "web": {
-        "bundler": "metro",
-        "favicon": "./assets/images/favicon.png"
+      web: {
+        bundler: "metro",
+        favicon: "./assets/images/favicon.png"
       },
-      "plugins": [
+      plugins: [
         [
           'expo-splash-screen',
           {
@@ -41,7 +41,7 @@ module.exports = function (_config) {
         [
           "expo-font",
           {
-            "fonts": [
+            fonts: [
               "./assets/fonts/inter/InterVariable.woff2",
               "./assets/fonts/inter/InterVariable-Italic.woff2",
               // Android only
@@ -57,9 +57,9 @@ module.exports = function (_config) {
           }
         ]
       ],
-      "experiments": {},
-      "extra": {
-        "apiUrl": "http://localhost:3000"
+      experiments: {},
+      extra: {
+        apiUrl: "http://localhost:3000"
       }
     }
 
