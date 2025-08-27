@@ -7,7 +7,7 @@ import { useAppColorScheme } from '#/context/theme';
 
 const { width } = Dimensions.get('window');
 const CARD_W = Math.min(width * 0.6, 300);
-const GAP = 14;
+const GAP = 8;
 
 export type TipItem = {
   id: string;
@@ -48,20 +48,22 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => onPressItem?.(item)}
-            style={[styles.cardWrapper, { width: CARD_W, borderColor: t.borderStrong }]}
+            accessibilityRole="button"
+            style={[
+              styles.cardUnified,
+              { width: CARD_W, borderColor: t.borderStrong, backgroundColor: t.foreground },
+            ]}
           >
-            <View style={[styles.card, { backgroundColor: t.foreground }]}> 
-              <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
-              <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
-              <Pressable
-                onPress={() => onPressItem?.(item)}
-                style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
-                accessibilityRole="button"
-              >
-                <Txt style={[styles.moreText, { color: t.primary }]}>Saiba mais</Txt>
-                <Ionicons name="arrow-forward" size={16} color={t.primary} style={{ marginLeft: 4 }} />
-              </Pressable>
-            </View>
+            <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
+            <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
+            <Pressable
+              onPress={() => onPressItem?.(item)}
+              style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
+              accessibilityRole="button"
+            >
+              <Txt style={[styles.moreText, { color: t.primary }]}>Saiba mais</Txt>
+              <Ionicons name="arrow-forward" size={16} color={t.primary} style={{ marginLeft: 4 }} />
+            </Pressable>
           </Pressable>
         )}
       />
@@ -85,18 +87,15 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
 }
 
 const styles = StyleSheet.create({
-  cardWrapper: {
-    borderWidth: 1.5,
-    borderRadius: 18,
-  },
-  card: {
-    borderRadius: 8,
+  cardUnified: {
+    //borderWidth: 1.5,
+    borderRadius: 12,
     padding: 16,
     elevation: 1,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 3 },
+    //shadowColor: '#000',
+    //shadowOpacity: 0.05,
+    //shadowRadius: 6,
+    //shadowOffset: { width: 0, height: 3 },
     minHeight: 140,
     justifyContent: 'center',
   },

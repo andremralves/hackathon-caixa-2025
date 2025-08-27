@@ -30,22 +30,20 @@ export function BestLoanCard({ product, onSimulate }: Props) {
   }, [onSimulate, product]);
 
   return (
-    <View style={[styles.wrapper, { borderColor: t.borderStrong }]}> 
-      <View style={[styles.inner, { backgroundColor: t.background }]}> 
-        <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Melhor opção</Txt>
-        <Txt style={[styles.title, { color: t.text }]}>{product.name}</Txt>
-        <View style={{ flexDirection: 'row', marginTop: 12 }}>
-          <Info label="Taxa a.m." value={`${monthlyPct}%`} theme={t} />
-          <Divider />
-          <Info label="Prazo" value={`${product.maxTermMonths || 0} meses`} theme={t} />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <Info label="Até" value={formatBRL(product.maxAmount || 0)} theme={t} small="Limite máx." />
-        </View>
-        <Pressable accessibilityRole="button" onPress={handlePress} style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]}> 
-          <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
-        </Pressable>
+    <View style={[styles.container, { borderColor: t.borderStrong, backgroundColor: t.background }]}> 
+      <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Melhor opção</Txt>
+      <Txt style={[styles.title, { color: t.text }]}>{product.name}</Txt>
+      <View style={{ flexDirection: 'row', marginTop: 12 }}>
+        <Info label="Taxa a.m." value={`${monthlyPct}%`} theme={t} />
+        <Divider />
+        <Info label="Prazo" value={`${product.maxTermMonths || 0} meses`} theme={t} />
       </View>
+      <View style={{ flexDirection: 'row', marginTop: 10 }}>
+        <Info label="Até" value={formatBRL(product.maxAmount || 0)} theme={t} small="Limite máx." />
+      </View>
+      <Pressable accessibilityRole="button" onPress={handlePress} style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]}> 
+        <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
+      </Pressable>
     </View>
   );
 }
@@ -72,20 +70,11 @@ function formatBRL(n: number) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     borderWidth: 1.5,
     borderRadius: 18,
-  // removed horizontal margin so it aligns with section padding
     marginTop: 8,
-  },
-  inner: {
-    borderRadius: 16,
     padding: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 7,
-    shadowOffset: { width: 0, height: 4 },
   },
   badge: {
     alignSelf: 'flex-start',

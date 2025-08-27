@@ -9,11 +9,12 @@ import {
 } from 'react-native';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
+import { fontWeight as fw } from '#/constants/tokens';
 import { useAppColorScheme } from '#/context/theme';
 
 const { width } = Dimensions.get('window');
 const CARD_W = Math.min(width * 0.86, 380);
-const GAP = 16;
+const GAP = 8;
 const SHOW_ALL_ID = '__show_all__';
 
 export type LoanProduct = {
@@ -127,34 +128,34 @@ function Card({
   const parcelaAprox = calcParcela(item.valorMax, item.taxaMes, item.prazoMeses);
 
   return (
-    <Pressable onPress={onPress}>
-      {/* Measure the OUTER wrapper to capture full height incl. padding */}
-      <View
-        style={[styles.border, { borderColor: t.borderStrong }]}
-        onLayout={(e) => onMeasure?.(e.nativeEvent.layout.height)}
-      >
-  <View style={[styles.card, { backgroundColor: t.background, shadowColor: t.primaryActive }]}>
-          <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Empréstimo</Txt>
-          <Txt style={[styles.title, { color: t.text }]}>{item.nome}</Txt>
-          {item.descricao ? <Txt style={[styles.desc, { color: t.textMuted }]}>{item.descricao}</Txt> : null}
+    <Pressable
+      onPress={onPress}
+      onLayout={(e) => onMeasure?.(e.nativeEvent.layout.height)}
+      style={[styles.cardContainer, { borderColor: t.borderStrong, backgroundColor: t.background }]}
+    >
+      <Txt style={[styles.badge, { backgroundColor: t.badgeBg, color: t.badgeText }]}>Empréstimo</Txt>
+      <Txt style={[styles.title, { color: t.text }]}>{item.nome}</Txt>
+      {item.descricao ? <Txt style={[styles.desc, { color: t.textMuted }]}>{item.descricao}</Txt> : null}
 
-          <View style={{ flexDirection: 'row', marginTop: 12 }}>
-            <Info label="Taxa a.m." value={`${taxaPct}%`} themeColors={t} />
-            <Divider />
-            <Info label="Prazo" value={`${item.prazoMeses} meses`} themeColors={t} />
-          </View>
-
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            <Info label="Até" value={formatBRL(item.valorMax)} small="Limite máx." themeColors={t} />
-            <Divider />
-            <Info label="Parcela aprox." value={formatBRL(parcelaAprox)} small="*Tabela Price" themeColors={t} />
-          </View>
-
-          <Pressable style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]} onPress={onPress} accessibilityRole="button">
-            <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
-          </Pressable>
-        </View>
+      <View style={{ flexDirection: 'row', marginTop: 12 }}>
+        <Info label="Taxa a.m." value={`${taxaPct}%`} themeColors={t} />
+        <Divider />
+        <Info label="Prazo" value={`${item.prazoMeses} meses`} themeColors={t} />
       </View>
+
+      <View style={{ flexDirection: 'row', marginTop: 10 }}>
+        <Info label="Até" value={formatBRL(item.valorMax)} small="Limite máx." themeColors={t} />
+        <Divider />
+        <Info label="Parcela aprox." value={formatBRL(parcelaAprox)} small="*Tabela Price" themeColors={t} />
+      </View>
+
+      <Pressable
+        style={[styles.cta, { backgroundColor: t.buttonPrimaryBg }]}
+        onPress={onPress}
+        accessibilityRole="button"
+      >
+        <Txt style={[styles.ctaText, { color: t.buttonPrimaryText }]}>Simular agora</Txt>
+      </Pressable>
     </Pressable>
   );
 }
@@ -170,14 +171,18 @@ function AddCard({
   themeColors: typeof Themes.light;
 }) {
   return (
-    <Pressable onPress={onPress} accessibilityRole="button">
-      {/* Use SAME wrapper & width; apply measured height so it matches others */}
-      <View style={[styles.border, { borderColor: t.borderStrong }, height ? { height } : null]}>
-  <View style={[styles.card, styles.addCardContent, { flex: 1, backgroundColor: t.background }]}>
-          <Txt style={[styles.addIcon, { color: t.primary }]}>＋</Txt>
-          <Txt style={[styles.addText, { color: t.primary }]}>Adicionar</Txt>
-        </View>
-      </View>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      style={[
+        styles.cardContainer,
+        styles.addCardContent,
+        { borderColor: t.borderStrong, backgroundColor: t.background },
+        height ? { height } : null,
+      ]}
+    >
+      <Txt style={[styles.addIcon, { color: t.primary }]}>＋</Txt>
+      <Txt style={[styles.addText, { color: t.primary }]}>Adicionar</Txt>
     </Pressable>
   );
 }
@@ -211,17 +216,11 @@ function calcParcela(valor: number, taxaMes: number, n: number) {
 }
 
 const styles = StyleSheet.create({
-  border: { width: CARD_W, borderRadius: 18, borderWidth: 1.5 },
-  card: {
-    // backgroundColor provided via theme token
-    borderRadius: 16,
+  cardContainer: {
+    width: CARD_W,
+    borderRadius: 12,
+    borderWidth: 1.5,
     padding: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    // no fixed height here — real cards define the row height; show-all will match it
   },
   badge: {
     alignSelf: 'flex-start',
@@ -230,12 +229,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: fw.bold,
   },
-  title: { fontSize: 18, fontWeight: '600', marginTop: 6 },
+  title: { fontSize: 18, fontWeight: fw.bold, marginTop: 6 },
   desc: { marginTop: 2 },
   label: { fontSize: 12 },
-  value: { fontSize: 16, fontWeight: '600', marginTop: 4 },
+  value: { fontSize: 16, fontWeight: fw.bold, marginTop: 4 },
   small: { fontSize: 11, marginTop: 2 },
   cta: {
     marginTop: 14,
@@ -244,15 +243,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  ctaText: { fontWeight: '600' },
+  ctaText: { fontWeight: fw.bold },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 12 },
   dot: { height: 8, borderRadius: 4 },
 
   // Styles for the add card
-  addCardContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  addCardContent: { justifyContent: 'center', alignItems: 'center' },
   addIcon: { fontSize: 36, marginBottom: 8 },
-  addText: { fontSize: 16, fontWeight: '600' },
+  addText: { fontSize: 16, fontWeight: fw.bold },
 });

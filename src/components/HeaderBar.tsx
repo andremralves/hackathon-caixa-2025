@@ -14,39 +14,33 @@ export default function HeaderBar() {
   return (
     <View
       style={[
-        styles.wrap,
+        styles.container,
         {
-          paddingTop: insets.top, // safe-area
+          paddingTop: insets.top + 16, // safe-area + base padding
           backgroundColor: t.background,
-          // borderBottomColor: t.border,
         },
       ]}
     >
-      <View style={styles.inner}>
-        <Image
-          source={require('../../assets/caixa_x_positivo.png')}
-          style={styles.logo}
-          resizeMode="contain"
+      <Image
+        source={require('../../assets/caixa_x_positivo.png')}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+      <TouchableOpacity onPress={toggle} accessibilityRole="button" hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+        <Ionicons
+          name={mode === 'light' ? 'moon-outline' : 'sunny-outline'}
+          size={22}
+          color={t.text}
         />
-        <TouchableOpacity onPress={toggle} accessibilityRole="button" hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-          <Ionicons
-            name={mode === 'light' ? 'moon-outline' : 'sunny-outline'}
-            size={22}
-            color={t.text}
-          />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    // borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  inner: {
+  container: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingBottom: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
