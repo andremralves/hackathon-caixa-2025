@@ -91,11 +91,9 @@ Abra o QR Code no Expo Go (mobile) ou pressione as teclas indicadas para web / e
 ---
 ## 📹 Demonstração (Screen Recording)
 
-```markdown
-![Demonstração](docs/demo.gif)
-```
-
-Coloque o arquivo em `docs/demo.gif` ou use link externo.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/748909bf-7da4-4479-b1c8-7ab0dae76aa6" alt="demo" width="250"/>
+</p>
 
 ---
 ## 🔍 Referências
