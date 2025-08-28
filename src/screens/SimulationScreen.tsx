@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  ScrollView,
   Modal,
   Pressable,
   Platform,
@@ -57,7 +56,7 @@ export default function SimulationScreen() {
 
   // Product selection
   const initialProduct: LoanProduct | null =
-    (products as LoanProduct[]).find(p => p.id === productId) ||
+    (products as LoanProduct[])?.find(p => p.id === productId) ||
     ((products as LoanProduct[])[0] ?? null);
 
   const [selectedProduct, setSelectedProduct] = useState<LoanProduct | null>(initialProduct);
@@ -112,147 +111,158 @@ export default function SimulationScreen() {
 
   const zebra = (i: number) => (i % 2 === 0 ? foreground : 'transparent');
 
+  const renderScheduleItem = ({ item, index }: { item: any; index: number }) => (
+    <View style={[styles.tr, { borderColor: border, backgroundColor: zebra(index) }]}>
+      <Txt style={[styles.td, { color: text, flex: 0.6 }]}>{item.month}</Txt>
+      <Txt style={[styles.td, { color: text }]}>{brl.format(item.interest)}</Txt>
+      <Txt style={[styles.td, { color: text }]}>{brl.format(item.amortization)}</Txt>
+      <Txt style={[styles.td, { color: text }]}>{brl.format(item.balance)}</Txt>
+    </View>
+  );
+
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
       <SecondaryHeader />
+
       {noProducts ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Txt style={{ color: text }}>Nenhum produto disponível.</Txt>
         </View>
       ) : (
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
-        {/* Header + product selector */}
-        <View style={styles.headerRow}>
-          <Txt style={[styles.title, { color: text }]}>Simulação de Empréstimo</Txt>
-          <TouchableOpacity
-            onPress={() => setPickerOpen(true)}
-            style={[styles.chip, { borderColor: border, backgroundColor: foreground }]}
-          >
-            <Txt style={{ color: text, fontWeight: fw.semiBold }}>
-              {selectedProduct ? selectedProduct.name : 'Selecionar produto'}
-            </Txt>
-          </TouchableOpacity>
-        </View>
+        <FlatList
+          data={result ? schedule : []}
+          keyExtractor={(it: any) => String(it.month)}
+          renderItem={renderScheduleItem}
+          contentContainerStyle={{ padding: 16 }}
+          keyboardShouldPersistTaps="handled"
+          ListHeaderComponent={
+            <View>
+              {/* Header + product selector */}
+              <View style={styles.headerRow}>
+                <Txt style={[styles.title, { color: text }]}>Simulação de Empréstimo</Txt>
+                <TouchableOpacity
+                  onPress={() => setPickerOpen(true)}
+                  style={[styles.chip, { borderColor: border, backgroundColor: foreground }]}
+                >
+                  <Txt style={{ color: text, fontWeight: fw.semiBold }}>
+                    {selectedProduct ? selectedProduct.name : 'Selecionar produto'}
+                  </Txt>
+                </TouchableOpacity>
+              </View>
 
-        {/* Dados do produto (separadores ao invés de card) */}
-        {selectedProduct && (
-          <View style={{ marginVertical: 16 }}>
-            <Txt style={[styles.sectionTitle, { color: text }]}>Dados do produto</Txt>
-            <View style={[styles.sepLine, { backgroundColor: border }]} />
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Nome</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.name}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo máximo</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.maxTermMonths} meses</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}</Txt>
-            </View>
-          </View>
-        )}
-
-        {/* Form */}
-        <View style={{ marginVertical: 16 }}>
-          <Txt style={[styles.label, { color: text }]}>Valor (R$)</Txt>
-          <TextInput
-            style={[styles.input, { backgroundColor: foreground, borderColor: border, color: text }]}
-            keyboardType={Platform.select({ ios: 'number-pad', android: 'numeric' })}
-            value={amountMasked}
-            onChangeText={onAmountChange}
-            placeholder="R$ 0,00"
-            placeholderTextColor={textMuted}
-          />
-
-          <Txt style={[styles.label, { color: text }]}>Prazo (meses)</Txt>
-          <TouchableOpacity
-            style={[styles.input, { backgroundColor: foreground, borderColor: border, justifyContent: 'center' }]}
-            onPress={() => setMonthPickerOpen(true)}
-          >
-            <Txt style={{ color: text, fontSize: fs.md }}>
-              {term ? `${term} meses` : 'Selecionar'}
-            </Txt>
-          </TouchableOpacity>
-        </View>
-
-        {/* Resumo */}
-        {result && (
-          <View style={{ marginVertical: 16 }}>
-            <Txt style={[styles.sectionTitle, { color: text }]}>Resumo</Txt>
-            <View style={[styles.sepLine, { backgroundColor: border }]} />
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Produto</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct?.name}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor solicitado</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(amountValue)}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{term} meses</Txt>
-            </View>
-            <View style={[styles.sepLine, { backgroundColor: border }]} />
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Parcela mensal</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.installment)}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Total em juros</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalInterest)}</Txt>
-            </View>
-            <View style={styles.rowLine}>
-              <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor total com juros</Txt>
-              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalPaid)}</Txt>
-            </View>
-          </View>
-        )}
-
-        {/* Cronograma */}
-        {result && (
-          <View style={{ marginTop: 16 }}>
-            <Txt style={{ color: text, fontWeight: fw.semiBold, fontSize: fs.md, marginBottom: 8 }}>
-              Memória de cálculo (Tabela Price)
-            </Txt>
-
-            <View style={[styles.tableHeader, { borderColor: border }]}> 
-              <Txt style={[styles.th, { color: text, flex: 0.6 }]}>Mês</Txt>
-              <Txt style={[styles.th, { color: text }]}>Juros</Txt>
-              <Txt style={[styles.th, { color: text }]}>Amortização</Txt>
-              <Txt style={[styles.th, { color: text }]}>Saldo</Txt>
-            </View>
-
-            <FlatList
-              keyExtractor={(it: any) => String(it.month)}
-              data={schedule}
-              renderItem={({ item, index }) => (
-                <View style={[styles.tr, { borderColor: border, backgroundColor: zebra(index) }]}> 
-                  <Txt style={[styles.td, { color: text, flex: 0.6 }]}>{item.month}</Txt>
-                  <Txt style={[styles.td, { color: text }]}>{brl.format(item.interest)}</Txt>
-                  <Txt style={[styles.td, { color: text }]}>{brl.format(item.amortization)}</Txt>
-                  <Txt style={[styles.td, { color: text }]}>{brl.format(item.balance)}</Txt>
+              {/* Dados do produto */}
+              {selectedProduct && (
+                <View style={{ marginVertical: 16 }}>
+                  <Txt style={[styles.sectionTitle, { color: text }]}>Dados do produto</Txt>
+                  <View style={[styles.sepLine, { backgroundColor: border }]} />
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Nome</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.name}</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo máximo</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.maxTermMonths} meses</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>
+                      {monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}
+                    </Txt>
+                  </View>
                 </View>
               )}
-              ListFooterComponent={<View style={{ height: 8 }} />}
-            />
-          </View>
-        )}
 
-        {/* CTA button */}
-        <GradientButton
-          title="Contratar"
-          onPress={() => navigation.goBack()}
-          fullWidth
-          roundness={22}
-          style={{ marginTop: 24 }}
+              {/* Form */}
+              <View style={{ marginVertical: 16 }}>
+                <Txt style={[styles.label, { color: text }]}>Valor (R$)</Txt>
+                <TextInput
+                  style={[styles.input, { backgroundColor: foreground, borderColor: border, color: text }]}
+                  keyboardType={Platform.select({ ios: 'number-pad', android: 'numeric' })}
+                  value={amountMasked}
+                  onChangeText={onAmountChange}
+                  placeholder="R$ 0,00"
+                  placeholderTextColor={textMuted}
+                />
+
+                <Txt style={[styles.label, { color: text }]}>Prazo (meses)</Txt>
+                <TouchableOpacity
+                  style={[styles.input, { backgroundColor: foreground, borderColor: border, justifyContent: 'center' }]}
+                  onPress={() => setMonthPickerOpen(true)}
+                >
+                  <Txt style={{ color: text, fontSize: fs.md }}>
+                    {term ? `${term} meses` : 'Selecionar'}
+                  </Txt>
+                </TouchableOpacity>
+              </View>
+
+              {/* Resumo */}
+              {result && (
+                <View style={{ marginVertical: 16 }}>
+                  <Txt style={[styles.sectionTitle, { color: text }]}>Resumo</Txt>
+                  <View style={[styles.sepLine, { backgroundColor: border }]} />
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Produto</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct?.name}</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor solicitado</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{brl.format(amountValue)}</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{term} meses</Txt>
+                  </View>
+                  <View style={[styles.sepLine, { backgroundColor: border }]} />
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>
+                      {monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}
+                    </Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Parcela mensal</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.installment)}</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Total em juros</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalInterest)}</Txt>
+                  </View>
+                  <View style={styles.rowLine}>
+                    <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor total com juros</Txt>
+                    <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalPaid)}</Txt>
+                  </View>
+                </View>
+              )}
+
+              {/* Table header */}
+              {result && (
+                <View style={{ marginTop: 16 }}>
+                  <Txt style={{ color: text, fontWeight: fw.semiBold, fontSize: fs.md, marginBottom: 8 }}>
+                    Memória de cálculo (Tabela Price)
+                  </Txt>
+                  <View style={[styles.tableHeader, { borderColor: border }]}>
+                    <Txt style={[styles.th, { color: text, flex: 0.6 }]}>Mês</Txt>
+                    <Txt style={[styles.th, { color: text }]}>Juros</Txt>
+                    <Txt style={[styles.th, { color: text }]}>Amortização</Txt>
+                    <Txt style={[styles.th, { color: text }]}>Saldo</Txt>
+                  </View>
+                </View>
+              )}
+            </View>
+          }
+          ListFooterComponent={
+            <View style={{ marginTop: 24 }}>
+              <GradientButton
+                title="Contratar"
+                onPress={() => navigation.goBack()}
+                fullWidth
+                roundness={22}
+              />
+              <View style={{ height: 8 }} />
+            </View>
+          }
+          ListEmptyComponent={<View />} // header takes over when there’s no schedule yet
         />
-      </ScrollView>
       )}
 
       {!noProducts && (
@@ -348,7 +358,7 @@ const styles = StyleSheet.create({
   th: { flex: 1, fontSize: fs.sm, fontWeight: fw.semiBold },
   tr: { flexDirection: 'row', borderBottomWidth: 1, paddingVertical: 6, paddingHorizontal: 4 },
   td: { flex: 1, fontSize: fs.xs },
-  // new separator-based layout styles
+
   sectionTitle: { fontSize: fs.lg, fontWeight: fw.semiBold, marginBottom: 4 },
   rowLine: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 6 },
   rowLabel: { fontSize: fs.sm, fontWeight: fw.normal },

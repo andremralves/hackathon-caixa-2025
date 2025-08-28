@@ -15,7 +15,7 @@ module.exports = function (_config) {
       },
       android: {
         adaptiveIcon: {
-          foregroundImage: "./assets/images/adaptive-icon.png",
+          foregroundImage: "./assets/caixa_x_positivo.png",
           backgroundColor: "#ffffff"
         },
         edgeToEdgeEnabled: true
