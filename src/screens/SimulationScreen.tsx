@@ -19,6 +19,7 @@ import { simulatePrice } from '#/utils/simulate';
 import { useThemeColor } from '#/hooks/useThemeColor';
 import SecondaryHeader from '#/components/SecondaryHeader';
 import { LoanProduct } from '#/types/loan';
+import { fontWeight as fw, fontSize as fs } from '#/constants/tokens';
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const num = (v: number) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 }).format(v);
@@ -52,7 +53,6 @@ export default function SimulationScreen() {
   const textMuted = useThemeColor({}, 'textMuted');
   const foreground = useThemeColor({}, 'foreground');
   const border = useThemeColor({}, 'border');
-  // removed direct buttonBg usage (using Button component variants)
 
   if (!products?.length) {
     return (
@@ -122,7 +122,7 @@ export default function SimulationScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
       <SecondaryHeader />
-      <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 24 }}>
+      <ScrollView contentContainerStyle={{ padding: 16  }}>
         {/* Header + product selector */}
         <View style={styles.headerRow}>
           <Txt style={[styles.title, { color: text }]}>Simulação de Empréstimo</Txt>
@@ -130,35 +130,34 @@ export default function SimulationScreen() {
             onPress={() => setPickerOpen(true)}
             style={[styles.chip, { borderColor: border, backgroundColor: foreground }]}
           >
-            <Txt style={{ color: text, fontWeight: '700' }}>
+            <Txt style={{ color: text, fontWeight: fw.semiBold }}>
               {selectedProduct ? selectedProduct.name : 'Selecionar produto'}
             </Txt>
           </TouchableOpacity>
         </View>
 
-        {/* Dados do produto */}
+        {/* Dados do produto (separadores ao invés de card) */}
         {selectedProduct && (
-          <View style={[styles.card, { backgroundColor: foreground, borderColor: border }]}>
-            <Txt style={[styles.cardTitle, { color: text }]}>Dados do produto</Txt>
-            <View style={styles.cardRow}>
-              <Txt style={[styles.cardLabel, { color: textMuted }]}>Nome</Txt>
-              <Txt style={[styles.cardValue, { color: text }]}>{selectedProduct.name}</Txt>
+          <View style={{ marginVertical: 16 }}>
+            <Txt style={[styles.sectionTitle, { color: text }]}>Dados do produto</Txt>
+            <View style={[styles.sepLine, { backgroundColor: border }]} />
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Nome</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.name}</Txt>
             </View>
-            <View style={styles.cardRow}>
-              <Txt style={[styles.cardLabel, { color: textMuted }]}>Prazo máximo</Txt>
-              <Txt style={[styles.cardValue, { color: text }]}>{selectedProduct.maxTermMonths} meses</Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo máximo</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct.maxTermMonths} meses</Txt>
             </View>
-            <View style={styles.cardRow}>
-              <Txt style={[styles.cardLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
-              <Txt style={[styles.cardValue, { color: text }]}>
-                {monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}
-              </Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}</Txt>
             </View>
           </View>
         )}
 
         {/* Form */}
-        <View style={{ marginTop: 12 }}>
+        <View style={{ marginVertical: 16 }}>
           <Txt style={[styles.label, { color: text }]}>Valor (R$)</Txt>
           <TextInput
             style={[styles.input, { backgroundColor: foreground, borderColor: border, color: text }]}
@@ -174,7 +173,7 @@ export default function SimulationScreen() {
             style={[styles.input, { backgroundColor: foreground, borderColor: border, justifyContent: 'center' }]}
             onPress={() => setMonthPickerOpen(true)}
           >
-            <Txt style={{ color: text, fontSize: 16 }}>
+            <Txt style={{ color: text, fontSize: fs.md }}>
               {term ? `${term} meses` : 'Selecionar'}
             </Txt>
           </TouchableOpacity>
@@ -182,41 +181,37 @@ export default function SimulationScreen() {
 
         {/* Resumo */}
         {result && (
-          <View style={[styles.card, { marginTop: 16, backgroundColor: foreground, borderColor: border }]}>
-            <Txt style={[styles.cardTitle, { color: text }]}>Resumo</Txt>
-
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Produto</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>{selectedProduct?.name}</Txt>
+          <View style={{ marginVertical: 16 }}>
+            <Txt style={[styles.sectionTitle, { color: text }]}>Resumo</Txt>
+            <View style={[styles.sepLine, { backgroundColor: border }]} />
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Produto</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{selectedProduct?.name}</Txt>
             </View>
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Valor solicitado</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>{brl.format(amountValue)}</Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor solicitado</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(amountValue)}</Txt>
             </View>
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Prazo</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>{term} meses</Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Prazo</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{term} meses</Txt>
             </View>
-            <View style={styles.sep} />
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>
-                {monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}
-              </Txt>
+            <View style={[styles.sepLine, { backgroundColor: border }]} />
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Taxa efetiva mensal</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{monthlyRate !== null ? `${num((monthlyRate as number) * 100)}%` : '–'}</Txt>
             </View>
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Parcela mensal</Txt>
-              <Txt style={[styles.summaryValueStrong, { color: text }]}>
-                {brl.format(result.installment)}
-              </Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Parcela mensal</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.installment)}</Txt>
             </View>
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Total em juros</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>{brl.format(result.totalInterest)}</Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Total em juros</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalInterest)}</Txt>
             </View>
-            <View style={styles.summaryRow}>
-              <Txt style={[styles.summaryLabel, { color: textMuted }]}>Valor total com juros</Txt>
-              <Txt style={[styles.summaryValue, { color: text }]}>{brl.format(result.totalPaid)}</Txt>
+            <View style={styles.rowLine}>
+              <Txt style={[styles.rowLabel, { color: textMuted }]}>Valor total com juros</Txt>
+              <Txt style={[styles.rowValue, { color: text }]}>{brl.format(result.totalPaid)}</Txt>
             </View>
           </View>
         )}
@@ -224,13 +219,12 @@ export default function SimulationScreen() {
         {/* Cronograma */}
         {result && (
           <View style={{ marginTop: 16 }}>
-            <Txt style={{ color: text, fontWeight: '800', fontSize: 16, marginBottom: 8 }}>
+            <Txt style={{ color: text, fontWeight: fw.semiBold, fontSize: fs.md, marginBottom: 8 }}>
               Memória de cálculo (Tabela Price)
             </Txt>
 
-            <View style={[styles.tableHeader, { backgroundColor: foreground, borderColor: border }]}>
+            <View style={[styles.tableHeader, { borderColor: border }]}> 
               <Txt style={[styles.th, { color: text, flex: 0.6 }]}>Mês</Txt>
-              {/* <Txt style={[styles.th, { color: text }]}>Parcela</Txt> */}
               <Txt style={[styles.th, { color: text }]}>Juros</Txt>
               <Txt style={[styles.th, { color: text }]}>Amortização</Txt>
               <Txt style={[styles.th, { color: text }]}>Saldo</Txt>
@@ -240,14 +234,8 @@ export default function SimulationScreen() {
               keyExtractor={(it: any) => String(it.month)}
               data={schedule}
               renderItem={({ item, index }) => (
-                <View
-                  style={[
-                    styles.tr,
-                    { backgroundColor: zebra(index), borderColor: border },
-                  ]}
-                >
+                <View style={[styles.tr, { borderColor: border, backgroundColor: zebra(index) }]}> 
                   <Txt style={[styles.td, { color: text, flex: 0.6 }]}>{item.month}</Txt>
-                  {/* <Txt style={[styles.td, { color: text }]}>{brl.format(item.installment)}</Txt> */}
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.interest)}</Txt>
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.amortization)}</Txt>
                   <Txt style={[styles.td, { color: text }]}>{brl.format(item.balance)}</Txt>
@@ -282,7 +270,7 @@ export default function SimulationScreen() {
                 style={[styles.productRow, { borderColor: border }]}
               >
                 <View style={{ flex: 1 }}>
-                  <Txt style={{ color: text, fontWeight: '700' }}>{item.name}</Txt>
+                  <Txt style={{ color: text, fontWeight: fw.normal }}>{item.name}</Txt>
                   <Txt style={{ color: textMuted }}>
                     Taxa mensal: {num(getMonthlyRate(item)! * 100)}%
                   </Txt>
@@ -344,32 +332,25 @@ export default function SimulationScreen() {
 }
 
 const styles = StyleSheet.create({
-  title: { fontSize: 22, fontWeight: '800' },
-  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 8 },
+  title: { fontSize: fs._2xl, fontWeight: fw.bold },
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 16 },
   chip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, borderWidth: 1 },
-  label: { fontSize: 14, fontWeight: '600', marginTop: 16, marginBottom: 6 },
+  label: { fontSize: fs.lg, fontWeight: fw.semiBold, marginTop: 16, marginBottom: 6 },
   input: {
     borderWidth: 1, borderRadius: 10,
-    paddingHorizontal: 12, paddingVertical: 12, fontSize: 16,
+    paddingHorizontal: 12, paddingVertical: 12, fontSize: fs.md,
   },
 
-  card: { borderWidth: 1, borderRadius: 12, padding: 12 },
-  cardTitle: { fontSize: 16, fontWeight: '800', marginBottom: 8 },
-  cardRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 },
-  cardLabel: { fontSize: 13, fontWeight: '600' },
-  cardValue: { fontSize: 14, fontWeight: '700' },
-
-  summaryRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 6 },
-  summaryLabel: { fontSize: 13, fontWeight: '600' },
-  summaryValue: { fontSize: 14, fontWeight: '700' },
-  summaryValueStrong: { fontSize: 16, fontWeight: '800' },
-  sep: { height: 1, opacity: 0.4, marginVertical: 6 },
-
-  tableHeader: { flexDirection: 'row', borderWidth: 1, borderTopLeftRadius: 10, borderTopRightRadius: 10, padding: 8 },
-  th: { flex: 1, fontSize: 12, fontWeight: '800' },
-  tr: { flexDirection: 'row', borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, padding: 8 },
-  td: { flex: 1, fontSize: 12 },
-  
+  tableHeader: { flexDirection: 'row', borderBottomWidth: 1, paddingVertical: 6, paddingHorizontal: 4 },
+  th: { flex: 1, fontSize: fs.sm, fontWeight: fw.semiBold },
+  tr: { flexDirection: 'row', borderBottomWidth: 1, paddingVertical: 6, paddingHorizontal: 4 },
+  td: { flex: 1, fontSize: fs.xs },
+  // new separator-based layout styles
+  sectionTitle: { fontSize: fs.lg, fontWeight: fw.semiBold, marginBottom: 4 },
+  rowLine: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 6 },
+  rowLabel: { fontSize: fs.sm, fontWeight: fw.normal },
+  rowValue: { fontSize: fs.sm, fontWeight: fw.semiBold },
+  sepLine: { height: 1, marginBottom: 4 },
 
   // Modal / picker
   modalBackdrop: { flex: 1, backgroundColor: '#0008' },
@@ -378,6 +359,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16, borderTopRightRadius: 16,
     borderTopWidth: 1, maxHeight: '65%', padding: 16,
   },
-  modalTitle: { fontSize: 18, fontWeight: '800', marginBottom: 12 },
+  modalTitle: { fontSize: fs.lg, fontWeight: fw.semiBold, marginBottom: 12 },
   productRow: { padding: 12, borderWidth: 1, borderRadius: 12 },
 });

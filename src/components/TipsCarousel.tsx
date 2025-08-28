@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
 import { useAppColorScheme } from '#/context/theme';
+import { fontWeight as fw, fontSize as fs, space, borderRadius as br } from '#/constants/tokens';
 
 // Fixed card width (keeps layout consistent across devices)
 const CARD_W = 230;
@@ -56,14 +57,14 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
           >
             <View>
               <Txt style={[styles.tipTitle, { color: t.text }]}>{item.title}</Txt>
-              <Txt style={[styles.tipDesc, { color: t.text }]}>{item.description}</Txt>
+              <Txt style={[styles.tipDesc, { color: t.textMuted }]}>{item.description}</Txt>
             </View>
             <Pressable
               onPress={() => onPressItem?.(item)}
               style={({ pressed }) => [styles.moreLink, pressed && { opacity: 0.6 }]}
             >
               <Txt style={[styles.moreText, { color: t.primary }]}>Saiba mais</Txt>
-              <Ionicons name="arrow-forward" size={16} color={t.primary} style={{ marginLeft: 4 }} />
+              <Ionicons name="arrow-forward" size={fs.sm} color={t.primary} style={{ marginLeft: 4 }} />
             </Pressable>
           </Pressable>
         )}
@@ -89,19 +90,19 @@ export default function TipsCarousel({ data, onPressItem }: Props) {
 
 const styles = StyleSheet.create({
   cardUnified: {
-    borderRadius: 12,
+    borderRadius: br.sm,
     padding: 16,
     minHeight: 140,
     justifyContent: 'space-between',
   },
-  tipTitle: { fontSize: 16, fontWeight: '600', marginBottom: 6 },
-  tipDesc: { fontSize: 13, lineHeight: 18 },
+  tipTitle: { fontSize: fs.md, fontWeight: fw.semiBold, marginBottom: 6 },
+  tipDesc: { fontSize: fs.sm, lineHeight: 18 },
   moreLink: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
   },
-  moreText: { fontSize: 13, fontWeight: '600' },
+  moreText: { fontSize: fs.sm, fontWeight: fw.semiBold },
   dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 10 },
   dot: { height: 8, borderRadius: 4 },
 });

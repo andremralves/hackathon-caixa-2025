@@ -14,6 +14,7 @@ import { useProducts } from '#/context/products';
 import { useNavigation } from '@react-navigation/native';
 import SecondaryHeader from '#/components/SecondaryHeader';
 import { useThemeColor } from '#/hooks/useThemeColor';
+import { fontWeight as fw, fontSize as fs } from '#/constants/tokens';
 
 export default function NewLoanProductScreen() {
   const [name, setName] = useState('');
@@ -106,9 +107,9 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 32,
   },
-  title: { fontSize: 24, fontWeight: '800', marginBottom: 24 },
-  label: { fontSize: 14, fontWeight: '600', marginTop: 12, marginBottom: 6 },
-  input: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 16 },
+  title: { fontSize: fs._2xl, fontWeight: fw.bold, marginBottom: 24 },
+  label: { fontSize: fs.md, fontWeight: fw.semiBold, marginTop: 12, marginBottom: 6 },
+  input: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: fs.md },
   footer: {
     paddingHorizontal: 20,
     paddingBottom: 20,

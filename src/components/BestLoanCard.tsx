@@ -4,13 +4,13 @@ import { Txt } from '#/components/Txt';
 import { useAppColorScheme } from '#/context/theme';
 import { Themes } from '#/constants/Colors';
 import GradientButton from '#/components/GradientButton';
+import { fontWeight as fw, fontSize as fs, space, borderRadius as br } from '#/constants/tokens';
 
 export type BestLoanProduct = {
   id: string;
   name: string;
   annualRate: number; // e.g. 0.28 = 28% a.a.
   maxTermMonths?: number;
-  maxAmount?: number;
 };
 
 type Props = {
@@ -42,10 +42,10 @@ export function BestLoanCard({ product, onSimulate }: Props) {
       <GradientButton
         title="Simular agora"
         onPress={handlePress}
-        roundness={22}
+        roundness={br.full}
         gradient="lime"
         height={40}
-        style={{ marginTop: 16, alignSelf: 'flex-end', minWidth: 140 }}
+        style={{ marginTop: space.xl, alignSelf: 'flex-end', minWidth: 140 }}
       />
     </View>
   );
@@ -68,28 +68,23 @@ function Divider() {
   return <View style={{ width: 1, backgroundColor: t.border, marginHorizontal: 8 }} />;
 }
 
-function formatBRL(n: number) {
-  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1.5,
-    borderRadius: 18,
-    marginTop: 8,
-    padding: 16,
+    borderRadius: br.sm,
+    marginTop: space.xs,
+    padding: space.md,
   },
   badge: {
     alignSelf: 'flex-start',
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 8,
-    fontSize: 12,
-    fontWeight: '600',
+    borderRadius: br.sm,
+    fontSize: fs.xs,
+    fontWeight: fw.semiBold,
   },
-  title: { fontSize: 18, fontWeight: '600', marginTop: 8 },
-  infoLabel: { fontSize: 12 },
-  infoValue: { fontSize: 16, fontWeight: '600', marginTop: 4 },
-  infoSmall: { fontSize: 11, marginTop: 2 },
-  // cta styles removed (using GradientButton)
+  title: { fontSize: fs.lg, fontWeight: fw.semiBold, marginTop: space.xs },
+  infoLabel: { fontSize: fs.xs },
+  infoValue: { fontSize: fs.sm, fontWeight: fw.semiBold, marginTop: space.xs },
+  infoSmall: { fontSize: fs.xs, marginTop: space.xs },
 });

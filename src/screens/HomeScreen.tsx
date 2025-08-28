@@ -2,13 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Txt } from '#/components/Txt';
 import LoanCarousel from '../components/LoanCarousel';
-import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import HeaderBar from '#/components/HeaderBar';
 import TipsCarousel, { TipItem } from '#/components/TipsCarousel';
 import { BestLoanCard } from '#/components/BestLoanCard';
 import { useThemeColor } from '#/hooks/useThemeColor';
+import { fontWeight as fw, fontSize as fs } from '#/constants/tokens';
 
 import { useProducts } from '#/context/products';
 
@@ -21,7 +20,6 @@ export default function HomeScreen() {
   const textMuted = useThemeColor({}, 'textMuted');
   const primary = useThemeColor({}, 'primary');
 
-  // Static tips (could be fetched later)
   const tips: TipItem[] = [
     {
       id: 'open-finance',
@@ -70,7 +68,6 @@ export default function HomeScreen() {
                 id: bestProduct.id,
                 name: bestProduct.name,
                 annualRate: bestProduct.annualRate,
-                maxAmount: bestProduct.maxAmount,
                 maxTermMonths: bestProduct.maxTermMonths,
               }}
               onSimulate={(p) => navigation.navigate('Simulation', { productId: p.id })}
@@ -100,17 +97,25 @@ export default function HomeScreen() {
             onAdd={() => navigation.navigate('NewLoanProduct')}
           />
         </View>
+
+        {/* Footer attribution */}
+        <View style={styles.footer}>
+          <Txt style={{ color: textMuted }}>
+            Feito por Andre Alves (c158441)
+          </Txt>
+        </View>
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { paddingBottom: 40 },
-  section: { paddingHorizontal: 16, marginTop: 24 },
-  header: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 },
-  title: { fontSize: 24, fontWeight: '900' },
+  container: { flex: 1, paddingHorizontal: 16 },
+  scrollContent: { paddingBottom: 20 },
+  section: { marginVertical: 16 },
+  header: { paddingTop: 16, paddingBottom: 16 },
+  title: { fontSize: fs._2xl, fontWeight: fw.bold },
   subtitle: { marginTop: 6 },
-  sectionTitle: { fontSize: 18, fontWeight: '600', marginBottom: 12 },
+  sectionTitle: { fontSize: fs.lg, fontWeight: fw.semiBold, marginBottom: 12 },
+  footer: { marginTop: 32, alignItems: 'center', paddingBottom: 24 },
 });

@@ -2,8 +2,8 @@ import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { View, FlatList, Pressable, StyleSheet, Dimensions, ViewToken } from 'react-native';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
-import { fontWeight as fw } from '#/constants/tokens';
 import { useAppColorScheme } from '#/context/theme';
+import { fontWeight as fw, fontSize as fs, space, borderRadius as br } from '#/constants/tokens';
 
 const { width } = Dimensions.get('window');
 const CARD_W = Math.min(width * 0.7, 380);
@@ -16,8 +16,6 @@ export type LoanProduct = {
   descricao?: string;
   taxaMes: number;        // 0.023 = 2,3% a.m.
   prazoMeses: number;     // 24
-  valorMax: number;       // 20000
-  gradiente?: [string, string];
 };
 
 type Props = {
@@ -33,7 +31,6 @@ export default function LoanCarousel({ data, onPress, onAdd }: Props) {
   const scheme: 'light' | 'dark' = schemeRaw === 'dark' ? 'dark' : 'light';
   const t = Themes[scheme];
 
-  // NEW: keep track of tallest card height
   const [rowHeight, setRowHeight] = useState<number | undefined>(undefined);
   const handleMeasure = useCallback((h: number) => {
     setRowHeight(prev => (prev && prev >= h ? prev : h));
@@ -46,7 +43,6 @@ export default function LoanCarousel({ data, onPress, onAdd }: Props) {
     }
   );
 
-  // NEW: append the "add" sentinel item
   const dataPlus = useMemo(
     () => [...data, { id: SHOW_ALL_ID } as LoanProduct],
     [data]
@@ -62,7 +58,6 @@ export default function LoanCarousel({ data, onPress, onAdd }: Props) {
         snapToInterval={CARD_W + GAP}
         decelerationRate="fast"
         snapToAlignment="start"
-        // Remove left padding so first card aligns with parent content padding; keep right padding for end spacing
         contentContainerStyle={{ paddingLeft: 0, paddingRight: GAP, alignItems: 'stretch' }}
         ItemSeparatorComponent={() => <View style={{ width: GAP }} />}
         onViewableItemsChanged={onViewableItemsChanged.current}
@@ -145,7 +140,6 @@ function Card({
   );
 }
 
-// NEW: The special "add" card that matches the measured row height
 function AddCard({
   height,
   onPress,
@@ -172,12 +166,11 @@ function AddCard({
   );
 }
 
-function Info({ label, value, small, themeColors: t }: { label: string; value: string; small?: string; themeColors: typeof Themes.light }) {
+function Info({ label, value, themeColors: t }: { label: string; value: string; themeColors: typeof Themes.light }) {
   return (
     <View style={{ flex: 1, paddingRight: 8 }}>
   <Txt style={[styles.label, { color: t.textSubtle }]}>{label}</Txt>
   <Txt style={[styles.value, { color: t.text }]}>{value}</Txt>
-  {small ? <Txt style={[styles.small, { color: t.textMuted }]}>{small}</Txt> : null}
     </View>
   );
 }
@@ -189,15 +182,10 @@ function Divider() {
   return <View style={{ width: 1, backgroundColor: t.border, marginHorizontal: 8 }} />;
 }
 
-function formatBRL(n: number) {
-  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-
 const styles = StyleSheet.create({
   cardContainer: {
     width: CARD_W,
-    borderRadius: 12,
+    borderRadius: br.sm,
     borderWidth: 1.5,
     padding: 16,
   },
@@ -210,24 +198,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: fw.semiBold,
   },
-  title: { fontSize: 18, fontWeight: fw.bold, marginTop: 6 },
+  title: { fontSize: fs.lg, fontWeight: fw.bold, marginTop: 6 },
   desc: { marginTop: 2 },
-  label: { fontSize: 12 },
-  value: { fontSize: 16, fontWeight: fw.semiBold, marginTop: 4 },
-  small: { fontSize: 11, marginTop: 2 },
+  label: { fontSize: fs.xs, marginTop: 2 },
+  value: { fontSize: fs.md, fontWeight: fw.semiBold, marginTop: 4 },
   cta: {
-    marginTop: 16,
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 22,
+    marginTop: space.xl,
+    paddingVertical: space.sm,
+    paddingHorizontal: space.md,
+    borderRadius: br.md,
     alignSelf: 'flex-end',
   },
-  ctaText: { fontWeight: fw.semiBold, fontSize: 16 },
-  dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 12 },
+  ctaText: { fontWeight: fw.semiBold, fontSize: fs.md },
+  dots: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: space.md },
   dot: { height: 8, borderRadius: 4 },
 
   // Styles for the add card
   addCardContent: { justifyContent: 'center', alignItems: 'center' },
   addIcon: { fontSize: 36, marginBottom: 8 },
-  addText: { fontSize: 16, fontWeight: fw.semiBold },
+  addText: { fontSize: fs.md, fontWeight: fw.semiBold },
 });
