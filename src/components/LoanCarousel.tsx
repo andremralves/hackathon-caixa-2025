@@ -112,7 +112,10 @@ function Card({
 }) {
   // Gradient removed – we now render a simple bordered container
 
-  const taxaPct = (item.taxaMes * 100).toFixed(1).replace('.', ',');
+  const taxaPct = new Intl.NumberFormat('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(item.taxaMes * 100);
 
   return (
     <View
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
   title: { fontSize: fs.lg, fontWeight: fw.bold, marginTop: 6 },
   desc: { marginTop: 2 },
   label: { fontSize: fs.xs, marginTop: 2 },
-  value: { fontSize: fs.md, fontWeight: fw.semiBold, marginTop: 4 },
+  value: { fontSize: fs.sm, fontWeight: fw.semiBold, marginTop: 4 },
   cta: {
     marginTop: space.xl,
     paddingVertical: space.sm,
