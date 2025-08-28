@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Txt } from '#/components/Txt';
 import { Themes } from '#/constants/Colors';
 import { useAppColorScheme } from '#/context/theme';
-import { fontWeight as fw, fontSize as fs, space, borderRadius as br } from '#/constants/tokens';
+import { fontWeight as fw, fontSize as fs, borderRadius as br } from '#/constants/tokens';
 
 // Fixed card width (keeps layout consistent across devices)
 const CARD_W = 230;

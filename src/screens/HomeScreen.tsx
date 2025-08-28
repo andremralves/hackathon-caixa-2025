@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Txt } from '#/components/Txt';
 import LoanCarousel from '../components/LoanCarousel';
 import { useNavigation } from '@react-navigation/native';

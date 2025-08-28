@@ -1,11 +1,11 @@
 // App.tsx (example)
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import HomeScreen from './screens/HomeScreen';
 import NewLoanProductScreen from './screens/NewLoanProducts';
 import SimulationScreen from './screens/SimulationScreen';
-import { View, StatusBar, Text } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useThemeColor } from '#/hooks/useThemeColor';
 import { AppThemeProvider, useAppColorScheme } from '#/context/theme';
@@ -14,9 +14,9 @@ import { ProductsProvider } from '#/context/products';
 const Stack = createNativeStackNavigator();
 
 function AppInner() {
-  // Always call all hooks in the same order (avoid conditional early return before other hooks)
   const scheme = useAppColorScheme();
   const background = useThemeColor({}, 'background');
+  /* eslint-disable @typescript-eslint/no-require-imports */
   const [fontsLoaded] = useFonts({
     'CAIXA-Light': require('../assets/fonts/caixa/CAIXAStd-Light.woff2'),
     'CAIXA-Regular': require('../assets/fonts/caixa/CAIXAStd-Regular.woff2'),
@@ -24,6 +24,7 @@ function AppInner() {
     'CAIXA-Bold': require('../assets/fonts/caixa/CAIXAStd-Bold.woff2'),
     'CAIXA-ExtraBold': require('../assets/fonts/caixa/CAIXAStd-ExtraBold.woff2'),
   });
+  /* eslint-enable @typescript-eslint/no-require-imports */
   const mode: 'light' | 'dark' = scheme === 'dark' ? 'dark' : 'light';
 
   if (!fontsLoaded) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { AppThemeProvider } from '#/context/theme';
-import GradientButton from '#/components/GradientButton';
+import { GradientButton } from '#/components/GradientButton';
 
 describe('GradientButton', () => {
   it('renderiza título', () => {

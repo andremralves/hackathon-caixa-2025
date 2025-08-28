@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     marginTop: space.xl,
     paddingVertical: space.sm,
     paddingHorizontal: space.md,
-    borderRadius: br.md,
+    borderRadius: br.full,
     alignSelf: 'flex-end',
   },
   ctaText: { fontWeight: fw.semiBold, fontSize: fs.md },

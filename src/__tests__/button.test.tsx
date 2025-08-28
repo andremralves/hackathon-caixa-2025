@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { AppThemeProvider } from '#/context/theme';
-import Button from '#/components/Button';
+import { Button } from '#/components/Button';
 
 function renderWithTheme(ui: React.ReactElement) {
   return render(<AppThemeProvider>{ui}</AppThemeProvider>);

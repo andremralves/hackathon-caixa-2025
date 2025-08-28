@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Txt } from '#/components/Txt';
 import { useAppColorScheme } from '#/context/theme';
 import { Themes } from '#/constants/Colors';
-import GradientButton from '#/components/GradientButton';
+import { GradientButton } from '#/components/GradientButton';
 import { fontWeight as fw, fontSize as fs, space, borderRadius as br } from '#/constants/tokens';
 
 export type BestLoanProduct = {

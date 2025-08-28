@@ -11,8 +11,8 @@ import {
   Platform,
 } from 'react-native';
 import { Txt } from '#/components/Txt';
-import GradientButton from '#/components/GradientButton';
-import Button from '#/components/Button';
+import { GradientButton } from '#/components/GradientButton';
+import { Button } from '#/components/Button';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useProducts } from '#/context/products';
 import { simulatePrice } from '#/utils/simulate';
@@ -53,14 +53,7 @@ export default function SimulationScreen() {
   const textMuted = useThemeColor({}, 'textMuted');
   const foreground = useThemeColor({}, 'foreground');
   const border = useThemeColor({}, 'border');
-
-  if (!products?.length) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: background }}>
-        <Txt style={{ color: text }}>Nenhum produto disponível.</Txt>
-      </View>
-    );
-  }
+  const noProducts = !products?.length;
 
   // Product selection
   const initialProduct: LoanProduct | null =
@@ -122,7 +115,12 @@ export default function SimulationScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: background }}>
       <SecondaryHeader />
-      <ScrollView contentContainerStyle={{ padding: 16  }}>
+      {noProducts ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Txt style={{ color: text }}>Nenhum produto disponível.</Txt>
+        </View>
+      ) : (
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
         {/* Header + product selector */}
         <View style={styles.headerRow}>
           <Txt style={[styles.title, { color: text }]}>Simulação de Empréstimo</Txt>
@@ -255,78 +253,83 @@ export default function SimulationScreen() {
           style={{ marginTop: 24 }}
         />
       </ScrollView>
+      )}
 
-      {/* Product Picker Modal */}
-      <Modal visible={pickerOpen} animationType="fade" transparent onRequestClose={() => setPickerOpen(false)}>
-        <Pressable style={styles.modalBackdrop} onPress={() => setPickerOpen(false)} />
-        <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
-          <Txt style={[styles.modalTitle, { color: text }]}>Selecionar produto</Txt>
-          <FlatList
-            data={products as LoanProduct[]}
-            keyExtractor={(p) => String(p.id)}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => onSelectProduct(item)}
-                style={[styles.productRow, { borderColor: border }]}
-              >
-                <View style={{ flex: 1 }}>
-                  <Txt style={{ color: text, fontWeight: fw.normal }}>{item.name}</Txt>
-                  <Txt style={{ color: textMuted }}>
-                    Taxa mensal: {num(getMonthlyRate(item)! * 100)}%
-                  </Txt>
-                  <Txt style={{ color: textMuted }}>
-                    Prazo máx.: {item.maxTermMonths} meses
-                  </Txt>
-                </View>
-              </TouchableOpacity>
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-          />
-          <Button
-            title="Fechar"
-            onPress={() => setPickerOpen(false)}
-            fullWidth
-            size="sm"
-            style={{ marginTop: 12 }}
-          />
-        </View>
-      </Modal>
+      {!noProducts && (
+        <>
+          {/* Product Picker Modal */}
+          <Modal visible={pickerOpen} animationType="fade" transparent onRequestClose={() => setPickerOpen(false)}>
+            <Pressable style={styles.modalBackdrop} onPress={() => setPickerOpen(false)} />
+            <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
+              <Txt style={[styles.modalTitle, { color: text }]}>Selecionar produto</Txt>
+              <FlatList
+                data={products as LoanProduct[]}
+                keyExtractor={(p) => String(p.id)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => onSelectProduct(item)}
+                    style={[styles.productRow, { borderColor: border }]}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Txt style={{ color: text, fontWeight: fw.normal }}>{item.name}</Txt>
+                      <Txt style={{ color: textMuted }}>
+                        Taxa mensal: {num(getMonthlyRate(item)! * 100)}%
+                      </Txt>
+                      <Txt style={{ color: textMuted }}>
+                        Prazo máx.: {item.maxTermMonths} meses
+                      </Txt>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+              />
+              <Button
+                title="Fechar"
+                onPress={() => setPickerOpen(false)}
+                fullWidth
+                size="sm"
+                style={{ marginTop: 12 }}
+              />
+            </View>
+          </Modal>
 
-      {/* Month Picker Modal */}
-      <Modal
-        visible={monthPickerOpen}
-        animationType="fade"
-        transparent
-        onRequestClose={() => setMonthPickerOpen(false)}
-      >
-        <Pressable style={styles.modalBackdrop} onPress={() => setMonthPickerOpen(false)} />
-        <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
-          <Txt style={[styles.modalTitle, { color: text }]}>Selecionar prazo</Txt>
-          <FlatList
-            data={Array.from({ length: selectedProduct?.maxTermMonths ?? 60 }, (_, i) => i + 1)}
-            keyExtractor={(m) => String(m)}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setTerm(item);
-                  setMonthPickerOpen(false);
-                }}
-                style={[styles.productRow, { borderColor: border }]}
-              >
-                <Txt style={{ color: text }}>{item} meses</Txt>
-              </TouchableOpacity>
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-          />
-          <Button
-            title="Fechar"
-            onPress={() => setMonthPickerOpen(false)}
-            fullWidth
-            size="sm"
-            style={{ marginTop: 12 }}
-          />
-        </View>
-      </Modal>
+          {/* Month Picker Modal */}
+          <Modal
+            visible={monthPickerOpen}
+            animationType="fade"
+            transparent
+            onRequestClose={() => setMonthPickerOpen(false)}
+          >
+            <Pressable style={styles.modalBackdrop} onPress={() => setMonthPickerOpen(false)} />
+            <View style={[styles.modalSheet, { backgroundColor: foreground, borderColor: border }]}>
+              <Txt style={[styles.modalTitle, { color: text }]}>Selecionar prazo</Txt>
+              <FlatList
+                data={Array.from({ length: selectedProduct?.maxTermMonths ?? 60 }, (_, i) => i + 1)}
+                keyExtractor={(m) => String(m)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setTerm(item);
+                      setMonthPickerOpen(false);
+                    }}
+                    style={[styles.productRow, { borderColor: border }]}
+                  >
+                    <Txt style={{ color: text }}>{item} meses</Txt>
+                  </TouchableOpacity>
+                )}
+                ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+              />
+              <Button
+                title="Fechar"
+                onPress={() => setMonthPickerOpen(false)}
+                fullWidth
+                size="sm"
+                style={{ marginTop: 12 }}
+              />
+            </View>
+          </Modal>
+        </>
+      )}
     </View>
   );
 }

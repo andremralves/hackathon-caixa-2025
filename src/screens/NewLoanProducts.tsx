@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Txt } from '#/components/Txt';
-import Button from '#/components/Button';
+import { Button } from '#/components/Button';
 import { useProducts } from '#/context/products';
 import { useNavigation } from '@react-navigation/native';
 import SecondaryHeader from '#/components/SecondaryHeader';
