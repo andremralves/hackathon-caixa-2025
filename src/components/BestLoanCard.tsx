@@ -44,7 +44,7 @@ export function BestLoanCard({ product, onSimulate }: Props) {
         onPress={handlePress}
         roundness={br.full}
         gradient="lime"
-        height={40}
+        // height={40}
         style={{ marginTop: space.xl, alignSelf: 'flex-end', minWidth: 140 }}
       />
     </View>

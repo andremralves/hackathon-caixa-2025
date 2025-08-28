@@ -30,7 +30,7 @@ export default function NewLoanProductScreen() {
     }
     const annualRate = parseFloat(interestRate.replace(',', '.')) / 100;
     const maxTermMonths = parseInt(maxTerm, 10);
-  if (isNaN(annualRate) || isNaN(maxTermMonths)) {
+    if (isNaN(annualRate) || isNaN(maxTermMonths)) {
       Alert.alert('Erro', 'Valores inválidos');
       return;
     }
@@ -58,10 +58,10 @@ export default function NewLoanProductScreen() {
         style={{ flex: 1 }}
         contentContainerStyle={[styles.container, { paddingTop: 16 }]}
         keyboardShouldPersistTaps="handled"
-      > 
-  <Txt style={[styles.title, { color: text }]}>Novo Produto de Empréstimo</Txt>
+      >
+        <Txt style={[styles.title, { color: text }]}>Novo Produto de Empréstimo</Txt>
 
-  <Txt style={[styles.label, { color: text }]}>Nome do Produto</Txt>
+        <Txt style={[styles.label, { color: text }]}>Nome do Produto</Txt>
         <TextInput
           style={[styles.input, { backgroundColor: surface, borderColor: border, color: text }]}
           placeholder="ex: Crédito Pessoal"
@@ -69,7 +69,7 @@ export default function NewLoanProductScreen() {
           onChangeText={setName}
         />
 
-  <Txt style={[styles.label, { color: text }]}>Taxa de Juros Anual (%)</Txt>
+        <Txt style={[styles.label, { color: text }]}>Taxa de Juros Anual (%)</Txt>
         <TextInput
           style={[styles.input, { backgroundColor: surface, borderColor: border, color: text }]}
           placeholder="ex: 15.5"
@@ -78,7 +78,7 @@ export default function NewLoanProductScreen() {
           onChangeText={setInterestRate}
         />
 
-  <Txt style={[styles.label, { color: text }]}>Prazo Máximo (meses)</Txt>
+        <Txt style={[styles.label, { color: text }]}>Prazo Máximo (meses)</Txt>
         <TextInput
           style={[styles.input, { backgroundColor: surface, borderColor: border, color: text }]}
           placeholder="ex: 48"
@@ -87,9 +87,9 @@ export default function NewLoanProductScreen() {
           onChangeText={setMaxTerm}
         />
 
-  {/* Valor Máximo field removed */}
+        {/* Valor Máximo field removed */}
       </ScrollView>
-      <View style={styles.footer}> 
+      <View style={styles.footer}>
         <Button
           title="Criar produto"
           size="sm"
