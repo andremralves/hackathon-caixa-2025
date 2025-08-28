@@ -15,9 +15,7 @@
   />
 </>
 
-
-
-
+Veja a demonstração do App em: https://andremralves.github.io/hackathon-caixa-2025/
 
 Aplicativo mobile (Expo + React Native 0.79 + React 19) para:
 1. Cadastrar produtos de empréstimo
